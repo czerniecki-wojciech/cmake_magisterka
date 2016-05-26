@@ -11,5 +11,5 @@ set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 include_directories("${PROJECT_INCLUDE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}")
  
-add_subdirectory(project1)
-add_subdirectory(project2)
+add_subdirectory(boost__example)
+add_subdirectory(gtest__example)

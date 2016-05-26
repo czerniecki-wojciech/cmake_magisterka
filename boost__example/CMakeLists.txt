@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 project (project)
 
-set (NAME testing2)
+
+get_filename_component(NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 #app part
  
