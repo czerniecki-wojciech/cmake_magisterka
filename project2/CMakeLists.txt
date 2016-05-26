@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 project (project)
 
-set (NAME testing)
+set (NAME testing2)
 
 #app part
  
@@ -34,4 +34,4 @@ LINK_DIRECTORIES("${CMAKE_SOURCE_DIR}/lib")
 #include_directories("${PROJECT_BINARY_DIR}")
 add_executable(${NAME}_test ${TEST_FILES})
 
-TARGET_LINK_LIBRARIES(${NAME}_test gtest.dll)
+TARGET_LINK_LIBRARIES(${NAME}_test boost_unit_test_framework-vc140-mt-gd-1_60.dll)
