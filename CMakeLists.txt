@@ -13,3 +13,4 @@ include_directories("${PROJECT_SOURCE_DIR}")
  
 add_subdirectory(boost__example)
 add_subdirectory(gtest__example)
+add_subdirectory(boost_param_test_case)
