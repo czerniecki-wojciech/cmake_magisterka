@@ -1,0 +1,46 @@
+
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE example
+
+#include <boost/test/unit_test.hpp>
+
+BOOST_AUTO_TEST_SUITE(Suite1)
+
+BOOST_AUTO_TEST_CASE(TestCase1)
+{
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(TestCase2)
+{
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+BOOST_AUTO_TEST_SUITE(Suite2)
+BOOST_AUTO_TEST_SUITE(InternalSuite1)
+
+BOOST_AUTO_TEST_CASE(TestCase1)
+{
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(TestCase2)
+{
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_CASE(TestCase1)
+{
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(TestCase2)
+{
+	BOOST_CHECK(true);
+}
