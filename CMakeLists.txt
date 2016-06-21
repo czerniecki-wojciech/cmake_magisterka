@@ -39,6 +39,8 @@ add_subdirectory(gtest_test_case)
 add_subdirectory(gtest_fixture)
 add_subdirectory(gtest_custom_predicate_support)
 add_subdirectory(gtest_type_assertions)
+add_subdirectory(gtest_custom_output_on_assert_failure)
+add_subdirectory(gtest_death_tests)
 
 file(COPY "${CMAKE_SOURCE_DIR}/lib/boost_unit_test_framework-vc140-mt-gd-1_60.dll" DESTINATION "${CMAKE_SOURCE_DIR}/bin/Debug")
 file(COPY "${CMAKE_SOURCE_DIR}/lib/gtest.dll" DESTINATION "${CMAKE_SOURCE_DIR}/bin/Debug")
