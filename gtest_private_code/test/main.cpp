@@ -3,7 +3,8 @@
 
 #include "../src/simple_calc.h"
 
-class MyTestFixture : public ::testing::Test
+
+class SimpleCalcTest : public ::testing::Test
 {
 protected:
 	virtual void SetUp()
@@ -12,25 +13,21 @@ protected:
 	}
 
 	virtual void TearDown()
-	{
-
-	}
+	{}
 
 	simple_calc sc;
 };
 
-TEST_F(MyTestFixture, AdditionTest) {
-	ASSERT_EQ(sc.addInts(1, 1), 2);
+TEST_F(SimpleCalcTest, PrivateMemberTest) {
+	sc.addInts(1, 1);
+	ASSERT_EQ(sc.lastSum, 2);
 }
 
-TEST_F(MyTestFixture, AdditionTest2) {
-	ASSERT_EQ(sc.addInts(3, 2), 5);
-}
 
 int main(int argc, char* argv[])
 {
 	::testing::InitGoogleTest(&argc, argv);
 
 	RUN_ALL_TESTS();
-	return 0;
+    return 0;
 }
