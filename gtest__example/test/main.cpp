@@ -5,7 +5,7 @@
 
 #include "../src/simple_calc.h"
 
-TEST(SquareRootTest, PositiveNos) {
+TEST(CalcTests, OnePlusTwoShouldBeEqualThree) {
 	simple_calc sc;
 	EXPECT_EQ(3, sc.addInts(1,2));
 }

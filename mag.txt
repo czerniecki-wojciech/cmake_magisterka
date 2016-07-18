@@ -6,11 +6,12 @@
 6. Historia biblioteki google test (gtest)
 7. OPis przeprowadzony badań
 Definicja testu w badanych bibliotekach
-Podstawowe metody porównywania - asercje
-Sposoby przygotowania środowiska przed rozpoczęciem testu
 Grupowanie testów
+Podstawowe metody weryfikacji - asercje
+Sposoby przygotowania środowiska przed rozpoczęciem testu
 Testy parametryzowane
 Testy z użyciem szablonów
+Sposób prezentacji wyników testów
 Formatowanie komunikatów o błędach
 Sterowanie wykonywaniem testów
 Ustawienia formatu wyjściowego uruchomionych testów
@@ -21,6 +22,14 @@ Zebranie i analiza wyników badań
 
 W jakim kierunku można rozwinąć pracę
 Ocena krytyczna pracy
+
+Przyjęty sposób prowadzenia badań
+
+Podczas realizacji badań przyjęto kilka założeń, które oprócz usystematyzowania prac starają się uczynić wyniki jak najbardziej czytelne.
+Projekt został stworzony przy pomocy systemu budowania CMake [TODO link].
+Każdy z zareprezentowanych testów znajduję się w osobnym katalogu, wewnątrz którego znajdują się katalogi z kodem źródłowym przykładowych programów (nazwany src), jeśli taki program wymagany był do użycia w teście oraz katalog z plikami testów (nazwany test). Oprócz tego znajduję się tam plik CMakeLists.txt, któy zawiera zbiór instukcji dla systemu budowania CMake w celu poprawnego wygnerowania projektu - w przypadku tej pracy pliku solucji dla programu Microsoft Visual Studio C++ Community 2015.
+W głównym katalogu projektu znajdują się także foldery include - zawierający pliki nagłówkowe badanych bibliotek, oraz lib - katalog zawierający wcześniej skompilowane biblioteki dynamiczne badanych srodowisk do testów jednostkowych.
+W momencie budowania tworzony jest katalog bin, w którym umieszczane są już skompilowane pliki wykonywalne testów służące do ich uruchomienia oraz pliki przykładowych programów o ile takie zostały dołączone do prezentowanych przykładów.
 
 Opis przeprowadzonych badań
 
@@ -44,7 +53,53 @@ Boost test pozwala na definiowanie testów bez przypisywania ich do grup testów
 
 Definicja przypadku testego w bibliotece Google Test
 
+Podobnie jak w przypadku biblioteki omawianej powyżej rejestracja TC w bibliotece realizowana jest przy pomocy prostego makra. 
+Dodatkowo w poniższym przykładzie zobrazowany został sposób odpalenia wszyskich testów z funkcji wejściowej programu - funkcji main. Z tego sposobu uruchamiania testów można zrezygnować w systuacji kiedy zamianst linkować program z wcześniej wygegenrowaną biblioteką dynamiczną gtest.dll zlinkujemy program z biblioteką statyczną gtest_main.lib.
+
 Automatyczna generacja wraz z rejestracją przpadku testowego w bibliotece Google test wygląda następująco:
 
 TODO KOD
+
+Grupowanie testów
+
+W przypadku rozbudowanych programów posiadających setki testów powstaje potrzeba lepszego zarządzania nimi. Pierwszą z czynności, które przynoszą większe usystematyzowanie testów jest ich zgrupowanie. Dzięki takiemu zabiegowi łatwiej jest określić programiście, do której funkcjonalności przynależy dany TC.
+W testach jednostkowych grupę testów przynależących do danej funkcjonalności nosi miano już wspomnianego określenia test suite, dalej TS. 
+W przypdaku biblioteki Boost unittest mamy możliwość stworzenie testu, który nie przynależy do TS, w tej sytuacji TC jest automatycznie rejestrowany (jeśli korzystamy z makra BOOST_AUTO_TEST_CASE) do głównej TS (z ang. Master Test Suite).
+Biblioteka Google test wymaga, aby każdy test case przynależał to TS, dlatego makro TEST przyjmuje dwa parametry - pierwszy to nazwa TS, drugi to nazwa TC.
+Dodatkowym atutem biblioteki Boost unittest jest fakt, że TS można grupować w kolejne poziomy grupy testów - inaczej mówić test suite może zawierać inny test suite, zawieranie nie jest ograniczone do jednego poziomu oraz można zawierać wiele TS w jedej TS.
+Poniżej przykłady zastosowania grupowania testów w badanych bibliotekach.
+
+Podstawowe metody weryfikacji - asercje
+
+Podstawowym narzędziem służącym do weryfikacji poprawności działania programów w testach są asercje, czyli porównania między spodziewaną wartością działania algorytmu a wartością otrzymaną w trakcie działania programu.
+Wartości możemy porównywać na różne sposobu - nie tylko sprawdzając ich równość co do wartości spodziewanej ale również pokazując zależność między wartością spodziewaną a otrzymaną. W przypdaku obu bibliotek do porównywania wartości wykorzystywane są makra.
+
+Podstawowe metody weryfikacji - asercje w bibliotece Boost unittest
+
+Biblioteka Boost unittest oferuje szereg asercji, które pozwalają porównywać wartości przy pomocy operatorów takich jak <=, >=, ==, <, >, !=. Oprócz tego biblioteka oferuję trzy poziomy określające priorytet asercji: WARN, CHECK oraz REQUIRE. Dla każdego z tych poziomów istnieje ten sam zestaw assercji, na przykład porównanie co do równości z wartością oczekiwaną występuje w trzech formach BOOST_WARN_EQUAL(a, b), BOOST_CHACK_EQUAL(a, b) oraz BOOST_REQUIRE_EQUAL(a, b).
+Powyżse funkcje sprawdzają czy wartość a jest równa wartości b z wykorzystaniem operatora == pomiędzy typami a oraz b - oznacza to, że można zdefiniować własny operator porównania i wykorzystywać go z biblioteką Boost unittest. 
+Wynik porównania - czyli zwrócona wartość logiczna z wyrażenia a == b, interpretowany jest róźnie dla każdego z makr. Makro poziomu REQUIRE w momencie niepowdzenia porównania (a jest różne od b) powoduje wyświetlenie błędu oraz natychmiastowe przerwanie obecnego TC oraz jeśli to możliwe przejście do następnego TC.
+Makro poziomu CHECK powoduję wyświetlenie wiadomości w momencie niepowodzenia, ale w odróżnieniu od makra REQUIRE pozwala kontynuować wykonywanie obecnego TC, ale TC zostaje uznany za zakończony z niepowodzeniem.
+Makro poziomu WARN służy wyłącznie do wypisania wiadomości o niepowodzeniu, TC nie jest uznany za zakończony niepowodzeniem - makra tego poziomu służą tylko w celu weryfikacji danych, która nie wpływa na ogólny wynik testów.
+
+TODO tabela z assercjami
+
+W powyższych tabeli oprócz wspomnianych asercji korzystających z operatorów porównania możemy skorzystać z dodatkowych asercji: BOOST_<LEVEL>, BOOST_<LEVEL>_BITEWISE_EQUAL, BOOST_<LEVEL>_CLOSE, BOOST_<LEVEL>_CLOSE_FRICTION, BOOST_<LEVEL>_EQUAL_COLLECTIONS, BOOST_<LEVEL>_EXCEPTION, BOOST_<LEVEL>_MESSAGE, BOOST_<LEVEL>_NO_THROW, BOOST_<LEVEL>_THROW, BOOST_<LEVEL>_PREDICATE, gdzie <LEVEL> może przyjmować jedną z trzech opcji: REQUIRE, CHECK, WARN
+BOOST_<LEVEL>(a) sprawdza czy wyrażenie w a jest prawdziwe czy też nie, jest to dość przydatne makro, ponieważ w miejsce a możemy wpisać dowolne wyrażenie, które będzie sprowadzone do wartości logicznej.
+Jednym z wyspecjalizowanych makr jest BOOST_<LEVEL>_BITEWISE_EQUAL(a, b), jest on szczególnie przydatny dla programistów pracujących na przykład na zbiorze flag. W momencie stwierdzenia nierówności między a i b sprawdza on na których pozycjach występuję przekłamanie. Dzięki temu oszczędza to czasu dla programisty, który w szybki sposób może zweryfikować za co był odpwoiedzialny dany bit.
+BOOST_<LEVEL>_EQUAL_COLLECTION(ab, ae, bb, be) jest odpowiednikiem BOOST_<LEVEL>_EQUAL, który można wywołać na kolekcjach danych jak kontenery w języcku C++11, które posiadają możliwość przeglądu elementów przy pomocy iteratorów albo na tablicach w stylu języka C. Parametry jakie przyjmuje to początek oraz koniec pierwszej kolecji oraz początek i koniec drugiej kolekcji. Poprzez koniec kolekcji rozumiany jest wskaźnik na element tuż za ostatnim istniejącym elementem kolecji.
+Makro BOOST_<LEVEL>_MESSAGE(a, m) jest odpowiednikiem makra BOOST_<LEVEL> - sprawdza czy wyrażenie zawarte w a jest prawdą. Drugi z parametrów, który przyjmuje jest to wskaźnik na niestandardową wiadomość, która będzie wyświetlona w momencie niepowodzenia.
+BOOST_<LEVEL>_PREDICATE(pred, (a)(b)) pozwala na zawołanie funkcji - predykatu, która zwróci wartość logiczną na podstawie przekazanych do niej wartości. Jest to jedno z makr, które posiada nietypową konstrukcję, ponieważ parametry przekazywane do predykatu należy podać w okrągłych nawiasach jako drugi parametr.
+Pozostałe z operatorów będą omówione w następnych rodziałach tej pracy TODO.
+
+
+
+
+
+
+
+
+
+
+
 
