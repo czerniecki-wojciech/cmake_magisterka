@@ -34,6 +34,7 @@ TEST(TestCase1, Fatal) {
 	ASSERT_DOUBLE_EQ(100.0, 100.00000000000001);
 	ASSERT_NEAR(1.0, 9.0, 10.0);
 	//FAIL(); //it will fail
+	SUCCEED();
 }
 
 TEST(AssertLevelTest, NonFatal) {

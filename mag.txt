@@ -8,6 +8,8 @@
 Definicja testu w badanych bibliotekach
 Grupowanie testów
 Podstawowe metody weryfikacji - asercje
+TODO Porównywanie liczb zmiennoprzecinkowych
+TODO Obsługa wyjątków
 Sposoby przygotowania środowiska przed rozpoczęciem testu
 Testy parametryzowane
 Testy z użyciem szablonów
@@ -92,10 +94,26 @@ Makro BOOST_<LEVEL>_MESSAGE(a, m) jest odpowiednikiem makra BOOST_<LEVEL> - spra
 BOOST_<LEVEL>_PREDICATE(pred, (a)(b)) pozwala na zawołanie funkcji - predykatu, która zwróci wartość logiczną na podstawie przekazanych do niej wartości. Jest to jedno z makr, które posiada nietypową konstrukcję, ponieważ parametry przekazywane do predykatu należy podać w okrągłych nawiasach jako drugi parametr.
 Pozostałe z operatorów będą omówione w następnych rodziałach tej pracy TODO.
 
+Podstawowe metody weryfikacji - asercje w bibliotece Boost unittest
 
+Podobnie jak w bibliotece Boost unittest w przypdaku biblioteki Google test mamy do dyspozcyji szereg asercji oparych na operatorach porówania. W przypdaku biblioteki Google test występują dwa poziomy priorytetów asercji - ASSERT oraz EXPECT. Pierwszy z nich odpowiada asercją REQUIRE, drugi asercją CHECK, czyli asercje poziomu ASSERT w momencie niepowodzenia zatrzymują dany TC oraz wypisują napotkany błąd, natomiast EXPECT powoduje tylko wypisanie przyczyny błędu.
+Poniżej przedstawiono wykaz dostępnych assercji dla biblioteki Google test.
 
+TODO tabelka z asercjami
 
+Dodatkowe asercje występujące w tej bibliotece to <LEVEL>_STREQ, <LEVEL>_STRNE, <LEVEL>_STRCASEEQ, <LEVEL>_STRCASENE, <LEVEL>_THROW, <LEVEL>_NO_THROW, <LEVEL>_ANY_THROW, <LEVEL>_FLOAT_EQ, <LEVEL>_DOUBLE_EQ, <LEVEL>_NEAR.
+<LEVEL>_STREQ oraz <LEVEL>_STRNE służą do porównywania ciągów znakowych (z ang. string). Pierwszy z nich sprawdza czy podane ciągi są takie same, drugi natomiast sprawdza czy są one od siebie różne. Opisywane asercje przyjmują dwa parametry - ciąg sprawdzany oraz ciąg spodziewany, są one wrażliwe na wielkości liter w badanych ciągach. Jeśli wielkość liter na nie mieć znaczenia podczas wykonywania porównania należy skorzystać z operatorów 
+<LEVEL>_STRCASEEQ, <LEVEL>_STRCASENE. Podobnie jak <LEVEL>_STREQ oraz <LEVEL>_STRNE asercje <LEVEL>_STRCASEEQ, <LEVEL>_STRCASENE przyjmują dwa parametry.
+W bibliotece Google test do dyspozycji mamy dodatkowe makra służące tylko do zaznaczania tego, że test zakończył się powodzeniem lub też nie - są to makra SUCCEED, FAIL, ADD_FAILURE oraz ADD_FAILURE_AT.
+SUCCEED jest mało przydatnym makrem, ponieważ jest to odpowiednik ASSERT_TRUE(true), a więc zawsze generuje pozytywny wynik. Ważne jest to, że makro SUCCEED nie powoduję, że cały TC jest oznaczany jako zakończony sukcesem.
+Makra FAIL, ADD_FAILURE oraz ADD_FAILURE_AT są już bardziej przydatne ze względu na to, że wpływają na wynik TC. FAIL generuję fatalny błąd powodujący przerwanie przetwarzania obecnego testu natomiast ADD_FAILURE oraz ADD_FAILURE_AT powodują zaraportowanie błędu, ale pozwalają na dokończenie przetwarzania obecnego TC.
+SUCCEED, FAIL oraz ADD_FAILURE nie przyjmują żadnych parametrów, natomiast ADD_FAILURE_AT przyjmuje dwa parametry - nazwę pliku oraz numer lini, w której wystąpił błąd.
+FAIL, ADD_FAILURE oraz ADD_FAILURE_AT przydają się w sytuacjach kiedy chcemy sprawdzić czy testowana funkcjonalność nie osiągnie nigdy miejsca w kodzie gdzie jedno z przytoczonych makr występuje. Najlepszym przykładem zastosowania tych makr jest zastosowane ich w funkcji zwrotnej (z ang. callback), którą może przyjmować jedna z testowanych metod. W przytoczonym przykładzie możemy sprawdzić czy zdefiniowana przez nas funckja nie została nigdy zawoła - jej zawołanie spowoduję wygenerowanie błędu.
+Makra <LEVEL>_THROW, <LEVEL>_NO_THROW, <LEVEL>_ANY_THROW, <LEVEL>_FLOAT_EQ, <LEVEL>_DOUBLE_EQ, <LEVEL>_NEAR zostaną omówione w dalszej części pracy. TODO
 
+Sposoby przygotowania środowiska przed rozpoczęciem testu
+
+Podczas pisania testów jednostkowych niekiedy aby przetestować jedną funkcjonalność potrzebujemy 
 
 
 
