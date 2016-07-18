@@ -1,0 +1,50 @@
+1. Wstęp
+2. Wprowadzenie
+3. Po co są testy jednostkowe
+4. 
+5. Historia biblioteki boost unittest
+6. Historia biblioteki google test (gtest)
+7. OPis przeprowadzony badań
+Definicja testu w badanych bibliotekach
+Podstawowe metody porównywania - asercje
+Sposoby przygotowania środowiska przed rozpoczęciem testu
+Grupowanie testów
+Testy parametryzowane
+Testy z użyciem szablonów
+Formatowanie komunikatów o błędach
+Sterowanie wykonywaniem testów
+Ustawienia formatu wyjściowego uruchomionych testów
+Zebranie i analiza wyników badań
+
+
+
+
+W jakim kierunku można rozwinąć pracę
+Ocena krytyczna pracy
+
+Opis przeprowadzonych badań
+
+W celu pozyskania wiedzy potrzebnej do przeprowadzenie analizy porównawczej wykonane zostały testy jednostkowe, których zadaniem było ukazanie podobieństw oraz różnic obu bibliotek. Wyniki pozyskane w ten sposób zostały uzupełnione poprzez studia literaturowe bazujące na dokumentacji dostępnej dla użytkowników bibliotek.
+W swoich badaniach przyjąłem założenie o nie uzupełnianiu pozyskanej z dokumentacji wiedzy analizując kod źrółowy obu frameworków, bo mogło by zakłócić idee, z którymi oba środowiska były dostarczane. W obu przypadkach językiem użytym do stworzenia bibliotek był język C++, więc teoretycznie możliwości obu bibliotek powinny być porównywalne.
+W czasie realizacji badań zostały przygotowane 37 testów (21 testów z biblioteki Boost oraz 16 testów z biblioteki Google), któe bazowały na wiedzy pozyskanej ze studiowanej dokumentacji.
+Badania zostały przeprowadzone na bibliotekach skompilowanych do plików bibliotek ładowanych dymamicznie (DLL TODO[X]). Testy zostały napisane, skompilowane oraz uruchomione w środowisku Microsoft Windows 7 przy użyciu środowiska Microsoft Visual Studio C++ w wersji Community 2015 wraz z dostarczonym z nim kompilatorem w wersji TODO[X].
+
+Definicja Testu w badanych bibliotekach.
+
+Obie biblioteki do definicji podstawowej jednostki w testach jednostkowych - przypadku testowego (z ang. test case, dalej TC) oferują podobne rozwiązania. Jednocześnie w obu przypdkach zalecane jest użycie makr w języku C++ do zdefiniowania TCu, co znacznie uławia pisanie testów oraz zwiększa produktywność podczas otestowywania całych modułów.
+Dodatkowym aspektem, który przemawia za użyciem makr jest łatwość rejestracji testów w "test runnerze", który odpowiada za uruchomienie testów.
+
+Definicja przypadku testego w bibliotece Boost unittest
+
+Automatyczna generacja wraz z rejestracją przpadku testowego w bibliotece Boost unittest wygląda następująco:
+
+TODO KOD
+
+Boost test pozwala na definiowanie testów bez przypisywania ich do grup testów (z ang. test suite). Do automatycznego wygenerowania TC służy makro BOOST_AUTO_TEST_CASE(nazwa){}
+
+Definicja przypadku testego w bibliotece Google Test
+
+Automatyczna generacja wraz z rejestracją przpadku testowego w bibliotece Google test wygląda następująco:
+
+TODO KOD
+
