@@ -47,6 +47,8 @@ Dodatkowym aspektem, który przemawia za użyciem makr jest łatwość rejestrac
 
 Definicja przypadku testego w bibliotece Boost unittest
 
+TODO opis makra
+
 Automatyczna generacja wraz z rejestracją przpadku testowego w bibliotece Boost unittest wygląda następująco:
 
 TODO KOD
@@ -56,6 +58,9 @@ Boost test pozwala na definiowanie testów bez przypisywania ich do grup testów
 Definicja przypadku testego w bibliotece Google Test
 
 Podobnie jak w przypadku biblioteki omawianej powyżej rejestracja TC w bibliotece realizowana jest przy pomocy prostego makra. 
+
+TODO opis makra
+
 Dodatkowo w poniższym przykładzie zobrazowany został sposób odpalenia wszyskich testów z funkcji wejściowej programu - funkcji main. Z tego sposobu uruchamiania testów można zrezygnować w systuacji kiedy zamianst linkować program z wcześniej wygegenrowaną biblioteką dynamiczną gtest.dll zlinkujemy program z biblioteką statyczną gtest_main.lib.
 
 Automatyczna generacja wraz z rejestracją przpadku testowego w bibliotece Google test wygląda następująco:
@@ -70,6 +75,8 @@ W przypdaku biblioteki Boost unittest mamy możliwość stworzenie testu, który
 Biblioteka Google test wymaga, aby każdy test case przynależał to TS, dlatego makro TEST przyjmuje dwa parametry - pierwszy to nazwa TS, drugi to nazwa TC.
 Dodatkowym atutem biblioteki Boost unittest jest fakt, że TS można grupować w kolejne poziomy grupy testów - inaczej mówić test suite może zawierać inny test suite, zawieranie nie jest ograniczone do jednego poziomu oraz można zawierać wiele TS w jedej TS.
 Poniżej przykłady zastosowania grupowania testów w badanych bibliotekach.
+
+TODO rozpisać
 
 Podstawowe metody weryfikacji - asercje
 
@@ -109,15 +116,66 @@ SUCCEED jest mało przydatnym makrem, ponieważ jest to odpowiednik ASSERT_TRUE(
 Makra FAIL, ADD_FAILURE oraz ADD_FAILURE_AT są już bardziej przydatne ze względu na to, że wpływają na wynik TC. FAIL generuję fatalny błąd powodujący przerwanie przetwarzania obecnego testu natomiast ADD_FAILURE oraz ADD_FAILURE_AT powodują zaraportowanie błędu, ale pozwalają na dokończenie przetwarzania obecnego TC.
 SUCCEED, FAIL oraz ADD_FAILURE nie przyjmują żadnych parametrów, natomiast ADD_FAILURE_AT przyjmuje dwa parametry - nazwę pliku oraz numer lini, w której wystąpił błąd.
 FAIL, ADD_FAILURE oraz ADD_FAILURE_AT przydają się w sytuacjach kiedy chcemy sprawdzić czy testowana funkcjonalność nie osiągnie nigdy miejsca w kodzie gdzie jedno z przytoczonych makr występuje. Najlepszym przykładem zastosowania tych makr jest zastosowane ich w funkcji zwrotnej (z ang. callback), którą może przyjmować jedna z testowanych metod. W przytoczonym przykładzie możemy sprawdzić czy zdefiniowana przez nas funckja nie została nigdy zawoła - jej zawołanie spowoduję wygenerowanie błędu.
-Makra <LEVEL>_THROW, <LEVEL>_NO_THROW, <LEVEL>_ANY_THROW, <LEVEL>_FLOAT_EQ, <LEVEL>_DOUBLE_EQ, <LEVEL>_NEAR zostaną omówione w dalszej części pracy. TODO
+Jednym z przydatnych makr jest makro <LEVEL>_NEAR(a, b, c). Przyjmuje ono trzy parametry - wartość sprawdzaną, wartość spodziewaną oraz odchylenie od wyniku. Makro sprawdza warunek b - c <= a <= b + c. Jesto ono przydatkne w momencie kiedy istnieje potrzeba czy wynik znajduję się w danym zakresie.
+Makra <LEVEL>_THROW, <LEVEL>_NO_THROW, <LEVEL>_ANY_THROW, <LEVEL>_FLOAT_EQ oraz <LEVEL>_DOUBLE_EQ zostaną omówione w dalszej części pracy. TODO
 
 Sposoby przygotowania środowiska przed rozpoczęciem testu
 
-Podczas pisania testów jednostkowych niekiedy aby przetestować jedną funkcjonalność potrzebujemy 
+Podczas pisania testów jednostkowych niekiedy, aby przetestować jedną funkcjonalność potrzebujemy uruchomić cały moduł. Operacja ta zależy od stopnia skomplikowania modułu, ale z punktu widzenia osoby piszącej testy wymaga napisania dodatkowego kodu. Dodatkowy kod powoduje, że intencja testu staje się niejasna. 
+Stosowanym rozwiązaniem jest przeniesienie inicjalizacji modułu do osobnej funkcji i wolanie jej w każdym TC. Takie podejście poprawia czytelność kodu - zamiast całej inicjalizacji wywołujemy funkcje, która za to odpowiada. Wadą takiego rozwiązania jest to, że programista musi pamiętać o tym, aby daną funkję wywołać.
+Preferowanym roziwiązaniem powyższego problemu jest zrzucenie odpowiedzialności za zainicjalizowanie modułu na framework testowy. Takie podejście w tematyce testów nazywane jest przygotowaniem fixtury (z ang. osprzętu do testu).
+Oba z badanych framweorków zapewniają powyższą funkcjonalność.
 
+Sposoby przygotowania środowiska przed rozpoczęciem testu - biblioteka Boost unittest
 
+Boost unittest zapewnia trzy rodzaje inicjalizacji fixtur - fixture dla TC, fixture dla TS oraz globalną fixture dla wszystkich testów. Fixtury w tej bibliotece oparte są na konstruktorach i destruktorach struktur (klas z dostępem publicznym) - w przypdaku fixtur dla TC i TS wewnątrz konstruktora i destruktora operujemy na zmiennych wewnętrznych klasy, dostęp do tych zmiennych otrzymujemy w teście bezpośrednio bez odnoszenia się do struktury fixtury.
+W przypadku zastosowania fixtury globalnej nie możemy już operować na zmiennych wewnętrznych struktury, ponieważ zastosowany mechanizm w bibliotece nie udostępni nam dostępu do tych zmiennych. Z tego względu fixtury globalne powinny operować na zmiennych globalnych.
+Tak jak to zostało napisane powyżej fixtury korzystają z konstruktora i destruktora struktury. Zależnie od typu zasięgu fixtury inicjalizacja i deinicjalizacja jej występuje w różnych momentach. W przypadku zasięgu ograniczonego do TC inicjalizacja jest wtkonywana tuż przed TC i zaraz po TC. W przypadku jeśli więcej niż jeden TC korzysta z tej samej fixtury zmiany dokonene przez każdy z nich mają zasięg tylko do jego zakończenia - fixtury czyszczą się po każdym TC, więc każdy z nich działa niezależnie od innych i zawsze rozpoczyna pracę w czystym środowisku.
+Włączenie używania fixtury dla TC odbywa się przez makro BOOST_FIXTURE_TEST_CASE przyjmujące jako parametry nazwę TC oraz nazwę struktury, której będziemy używać jako fixturę dla dafiniowanego TC.
 
+TODO kod dla per test fixture
 
+Fixtury dla TS działają analogicznie jak fixtury dla TC, jedyną róźnicą jest moment inicjalizacji i deinicjalizacji zmiennych, która nie jest robiona przed i po każdym TC, ale przed pierwszym TC należącym do TS oraz po ostatnim TC należącym do TS.
+Takie podejście wiąże się z tym, że zmiany dokonane na zmiennych należących do fixtury dla TS są widoczne dla TC wykonywanych po nim, z tego względu zaleca się stosowanie danych niemodyfikowalnych przez TC, ponieważ jest to sprzeczne z założeniem, że każdy test jednostkowy powinien być niezależny od innych testów jednostkowych.
+W przypadku kiedy TC modyfikują dane fixtury przygotowanej dla TS należy zastanowić się nad połączeniem scenariuszy poszczególnych TC w jeden, który będzie sprawdzał sekwencje działań, a fixture dla TS przekształcić w fixture dla TC.
+Aby skorzystać z fixtury dla TS należy użyć makra BOOST_FIXTURE_TEST_SUITE, gdzie jako parametry należy podać nazwę TS oraz nazwę struktury, która będze pełnić rolę fixtury. Do zamknięcia zasięgu tak zadeklarowanej TS stosujemy standardowe makro BOOST_AUTO_TEST_SUITE_END.
 
+TODO kod dla per suite fixture
 
+Fixtury globalne w przeciwieństkie do omawianych fixtur dla TC oraz TS nie powinny operować ba zmiennych wewnętrznych tworzącej ich struktury - powinny korzystać ze zmiennych globalnych, któe będą dostępne dla każdego TC.
+Inicjalizacja odbywa się w przypadku globalnej fixtury przed rozpoczęciem inicjalizacji innych fixtur, a deinicjalizacja po zakończniu ostatniego TC oraz deinicjalizacji ostatniej z fixtur.
+Globalne fixtury stosuje się do inicjalizacji zmiennych, któe powinny być dostępne dla wszystkich TC. Zaleca się nie modyfikowanie zmiennych zainicjalizowanych w tym typie fixtury w celu zapewnienia identycznego stanu początkowego dla każdego TC.
+Podobnie jak we wcześniejszym wypadku - jeśli występuje konieczność modyfikacji zmiennych inicjalizowanych prze fixture globalną należy zasanowić się nad zmieniejszeniem jej zasięgu do TS lub TC.
+Inicjalizacja struktury jako fixtury globalnej odbywa się poprzez użycie makra BOOST_GLOBAL_FIXTURE jako parametr podając nazwę klasy fixtury.
 
+TODO kod dla global fixture
+
+Sposoby przygotowania środowiska przed rozpoczęciem testu - biblioteka Google test
+
+Biblioteka Google test w przeciwieństwie do wcześniej omawianej biblioteki Boost unittest nie korzysta z konstruktorów i destruktorów struktury pełniącej rolę fixtury na rzecz podejścia bardziej obiektowego.
+W Boost unittest fixtura była strukturą jezyka C - inaczej mówiąc klasą z dostępem publicznym do wszystkich swoich metod oraz zmiennych, w przypdaku Google test jako fixtura wykorzystywana jest klasa dziedzicząca po klasie ::testing::Test lub ::testing::Environment.
+Za inicjalizowanie zmiennych odpowiada metoda SetUp, a za ich deinicjalizacje metoda TearDown.
+Zmienne fixtury trzymane są jako wewnętrzene zmienne klasy z dostępem protected, są one dostepne w TC bezpośrednio lub korzystając z obiektu fixtury globalnej.
+W bibliotece Google test występuja dwa rodzaje fixtur - dla TC oraz globalna.
+W przypadku fixtury dla TC potrzebne jest klasa dziedzicząca publicznie po klasie ::testing::Test. Do stworzenia TC z użyciem fixtury odpowiada makro TEST_F przyjmujące nazwę klasy fixtury oraz nazwę TC. Inicjalizacja i deinicjalizacja mają miejsce przed i po każdym TC, dzięki temu każdy TC korzysta z tego samego środowiska startowego - nie ma możliwości wpływania na kolejne TC.
+
+TODO kod fuixtury per test case
+
+Klasa fixtury globalnej dziedziczy publicznie po klasie ::testing::Environment. W przeciwieństwie do fixtury dla TC rejestracja fixtury globalnej musi odbyć się przed uruchomieniem wszystkich testów metodą RUN_ALL_TESTS.
+Rejestracja korzysta z funkcji ::testing::AddGlobalTestEnvironment przyjmującej wskaźnik na obiekt klasy fixtury globalnej, metoda ta zwraca wskaźnik na klasę bazową ::testing::Environment. 
+Wspomniany otrzymany wskaźnik jest punktem dostępowym do globalnej fixtury - najłatwiejszym sposoblem jest trzymanie go jako zmiennej ogólno-dostępnej.
+Podobnie jak w przypadku Boost unittest inicjalizacja odbywa się przed uruchomieniem inicjalizacji pierwszego TC, a deinicjalizacja odbywa się po zakończeniu wszystkich TC.
+
+TODO kod fixtury globalnej
+
+Testy parametryzowane
+
+Pisząc testy jenostkowe często spotyka się sytuacje, kiedy jedno zachowanie powinno być takie same dla paru zestawu danych wejściowych. W momencie kiedy zmuszeni jesteśmy przetestować stosunkkowo niewielką ilość zestawów danych nie jest to kłopotliwe, natomiast w miarę rozrastania się ich ilości zaczyna to generować problemy, z którymi programista musi sobie poradzić.
+Pierwszy z tych problemów to niepotrzebne powielania kodu ze względu na budowanie wielu podobnych TC różniących się między sobą tylko zestawem danych wejściowych. Kod stając się długi staje się też mniej czytelny.
+Szybkim rozwiązaniem staje się ekstrakcja kodu do funkcji zewnętrznej, ale nie niweluje to do końca konieczności pisania takiego samego kodu dla różnych danych.
+Drugim z problemów jest czasochłonny refactoring testów w momencie kiedy zachowanie ulegnie zmianie, wtedy zmiana musi być aplikowana dla każdego TC.
+Kolejną niedogodnością jest przeglądania zestawu danych wejściowych - zamiast trzymać listę danych wejściowych w jednym miejscu jest ona rozporoszona na każdy TC, co dodatkowo przy małej uwadze powoduje duplikacje pisanych testów.
+Rozwiązaniem powyższych problemów jest zastosowanie testów parametryzowanych, które będą uruchamiały jeden TC z różnymi parametrami wejściowymi. 
+Testy parametryzowane z pozoru można zastąpić standardową pętlą for, ale powoduję to, że w momencie niepowodzenie nie wiemy który z zestawów danych spowodował zakończenie testu niepowodzeniem, co z kolei w pzypdaku testów parametryzowanych jest dokładnie zaznaczone.
+
+Testy parametryzowane - bibliotek Boost unittest

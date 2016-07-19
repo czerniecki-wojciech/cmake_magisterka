@@ -4,7 +4,8 @@
 
 #include <boost/test/unit_test.hpp>
 
-struct MyFixture {
+class MyFixture {
+public:
 	MyFixture() {
 		this->myFixtureValue = 3;
 		BOOST_TEST_MESSAGE("fixture setUp");
