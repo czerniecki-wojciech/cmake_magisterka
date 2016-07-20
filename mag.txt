@@ -8,8 +8,8 @@
 Definicja testu w badanych bibliotekach
 Grupowanie testów
 Podstawowe metody weryfikacji - asercje
-TODO Porównywanie liczb zmiennoprzecinkowych
-TODO Obsługa wyjątków
+Porównywanie liczb zmiennoprzecinkowych
+Obsługa wyjątków
 Sposoby przygotowania środowiska przed rozpoczęciem testu
 Testy parametryzowane
 Testy z użyciem szablonów
@@ -123,6 +123,24 @@ Porównywanie liczb zmiennoprzecinkowych
 
 Liczby zmiennoprzecinkowe są reprezentowane w pamieci komputera z pewną skończoną dokładnością, która zależy od wielkości reprezentacji liczby (TODO link do IEEE). Występowanie tej niedokładności wiąże się z tym, że liczby zmienno przecinkowe mogą się róźnić podczas porównywania - przykłądowo liczba typu double (podwójnej pracyzji) 1.0 dzielone przez 5.0 jest różna od 0.2.
 Do porównywania liczb uwzględniając ich niedokładność wymagane są odpowiednie metody.
+
+Porównywanie liczb zmiennoprzecinkowych - biblioteka Boost unittest
+
+Korzystając z biblioteki Boost unittest mamy do dyskozycji dwie asercje - BOOST_<LEVEL>_CLOSE oraz BOOST_<LEVEL>_CLOSE_FRACTION. Do ich użycia potrzebne jest wczytanie nagłówka boost/test/floating_point_comparison.hpp.
+Pierwsza z nich sprawdza czy liczba podana jako pierwszy parametr jest różna od drugiej o co najwyżej procent podany jako trzeci z parametrów.
+
+TODO wzór
+
+Drugie z makr - BOOST_<LEVEL>_CLOSE_FRACTION sprawdza czy różnica między pierwszym a drugim parametrem jest co najwyżej równa trzeciemu z nich.
+Przykłady użycia obu makr znajdują się w rozdziale poświęconym asercją TODO dodać numer rozdziału.
+
+Porównywanie liczb zmiennoprzecinkowych - biblioteka Google test
+
+W bibliotece Google test znajdziemy dwie asercje - jedną dla liczb pojedynczej precyzji (float) oraz dla liczb podwójnej precyzji (double).
+Oba z tych makr - <LEVEL>_FLOAT_EQ oraz <LEVEL>_DOUBLE_EQ porównują liczby z pominięciem ich niedokładności. W rozdziale poświęconym asercją (TODO numer rozdziału asercje) widzimy, że liczba 100.0f jest w swojej reprezentacji równa 100.00001f. W przypdaku liczb podwójnej precyzji błąd znajduje się na dalszym miejscu po przecinku niż w przypadku liczb pojedyńczej precyzji.
+Przykłady użycia obu makr znadują się w rozdziale poświęconym asercją (TODO numer rozdziału asercje).
+
+TODO Obsługa wyjątków
 
 TODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODO
 
