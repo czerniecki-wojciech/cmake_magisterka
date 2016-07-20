@@ -119,6 +119,13 @@ FAIL, ADD_FAILURE oraz ADD_FAILURE_AT przydają się w sytuacjach kiedy chcemy s
 Jednym z przydatnych makr jest makro <LEVEL>_NEAR(a, b, c). Przyjmuje ono trzy parametry - wartość sprawdzaną, wartość spodziewaną oraz odchylenie od wyniku. Makro sprawdza warunek b - c <= a <= b + c. Jesto ono przydatkne w momencie kiedy istnieje potrzeba czy wynik znajduję się w danym zakresie.
 Makra <LEVEL>_THROW, <LEVEL>_NO_THROW, <LEVEL>_ANY_THROW, <LEVEL>_FLOAT_EQ oraz <LEVEL>_DOUBLE_EQ zostaną omówione w dalszej części pracy. TODO
 
+Porównywanie liczb zmiennoprzecinkowych
+
+Liczby zmiennoprzecinkowe są reprezentowane w pamieci komputera z pewną skończoną dokładnością, która zależy od wielkości reprezentacji liczby (TODO link do IEEE). Występowanie tej niedokładności wiąże się z tym, że liczby zmienno przecinkowe mogą się róźnić podczas porównywania - przykłądowo liczba typu double (podwójnej pracyzji) 1.0 dzielone przez 5.0 jest różna od 0.2.
+Do porównywania liczb uwzględniając ich niedokładność wymagane są odpowiednie metody.
+
+TODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODO
+
 Sposoby przygotowania środowiska przed rozpoczęciem testu
 
 Podczas pisania testów jednostkowych niekiedy, aby przetestować jedną funkcjonalność potrzebujemy uruchomić cały moduł. Operacja ta zależy od stopnia skomplikowania modułu, ale z punktu widzenia osoby piszącej testy wymaga napisania dodatkowego kodu. Dodatkowy kod powoduje, że intencja testu staje się niejasna. 
@@ -179,3 +186,66 @@ Rozwiązaniem powyższych problemów jest zastosowanie testów parametryzowanych
 Testy parametryzowane z pozoru można zastąpić standardową pętlą for, ale powoduję to, że w momencie niepowodzenie nie wiemy który z zestawów danych spowodował zakończenie testu niepowodzeniem, co z kolei w pzypdaku testów parametryzowanych jest dokładnie zaznaczone.
 
 Testy parametryzowane - bibliotek Boost unittest
+
+Biblioteka Boost unittest dostarcza możliwość tworzenia testów parametryzowanych przy pomocy makra BOOST_PARAM_TEST_CASE.
+Pierwszy z parametrów przyjmowanych przez wspomniane makro to wskaźnik do funkcji, która będzie pełniła rolę TC, a kolejne dwa parametry to wskaźnik na pierwszy zestaw danych oraz wskaźnik na zestaw za ostatnim istniejącym zestawem.
+Zestaw danych wejściowych jest przekazywany do funkji testowej poprzez jej parametr, który musi być zgodny z typem podawanych danych wejściowych.
+W przypadku testów parametryzowanych z użyciem biblioteki ładowanej dynamicznie Boost unittest wymusza ręczną rejestrację testu w m głównej grupie testowej, a to z kolei wymaga napisania funkcji main, która taką rejestrację wykona.
+Poniżej przykład stworzenia testów parametryzowanych z użyciem biblioteki Boost unittest załadowanej dynamicznie.
+
+TODO kod test parametryzowany boost
+
+Testy parametryzowane - bibliotek Google test
+
+Google test zapewnia obsługę testów parametryzowanych przy użyciu dwóch wyspecjalizowanych makr - TEST_P oraz INSTANTIATE_TEST_CASE_P.
+Pierwszy z nich przymuje dwa parametry - nazwę pomocniczą służącą do rejestracji testu parametryzowanego, oraz nazwę TC. Drugie z makr jak już zostało to wspomniane służy do rejestracji testu  - przyjmuję trzy parametry, pierwszy - nazwa testu parametryzowanego, drugi - nazwa pomocnicza TC oraz ostatni, którym jest zestaw danych.
+Zestaw danych można zdefiniować przy pomocy generatorów parametrów: Range, Values, ValuesIn oraz Bool. Range powoduję wygenerowanie liczb z danego zakresu z możliwością definiowania kroku, Values pozwala na zdefiniowanie wartości bezpośrednio w kodzie, ValuesIn pozwala na wczytanie parametrów z kontenera danych, a Bool sprawdza wynik dla wartości logicznych true i false.
+Poniżej przykład zastosowania generatora Values w testach parametryzowanych.
+
+Testy z użyciem szablonów
+
+Obecne standardy korzystania z języka C++ wymagają znajomości szablonów oraz ich wykorzystania do generowania kodu dla róźnych parametrów począwszy od zmiennych po całe klasy wyspecjalizowane. Aby przetestować tak wygenerowane fragmenty kodu należy zdefiniować testy dla każdej ze specjalizacji danej funkcjonalności.
+W przypadku kiedy testy dla różnych typów danych są identyczne w celu redukcji ilości kodu należy zastosować testy szablonowe.
+
+Testy z użyciem szablonów - biblioteka Boost unittest
+
+Moduł unittest z biblioteki BOOST dostarcza bardzo pomocne makro, które pomoże zredukować ilość kodu dla metod oraz klas opartych na szablonach. Makro BOOST_AUTO_TEST_CASE_TEMPLATE przyjmujące trzy parametry(nazwę testu, nazwę, przez którą można się odnieść do typu, dla którego test jest wykonywany oraz listy typów) definiuje TC, który będzie wykonywany dla każdego z typów, które programista będzie potrzebował przetestować.
+Typy do przetestowania należy wpisać do specjalnie przygotowanej listy typów również pochodzącej z biblioteki Boost - boost::mpl::list. Tak zdefiniowane typy możemy przekazać do już wspomninego makra redukując tym samym ilość kodu czyniąc go bardziej przejrzystym i łatwiejszym w refaktoringu.
+Poniżej przykład zastosowania testów szablonowych w bibliotece Boost unittest.
+
+TODO template tc boost code
+
+Testy z użyciem szablonów - biblioteka Google test
+
+Google test dostarcza dwa zestawy makr odpowiedzialnych za utworzenie testów szablonowych.
+Pierwszy zestaw składa się z makr: TYPED_TEST_CASE oraz TYPED_TEST. Zestaw ten pozwala definiować testy szablonowe z już wcześniej zdefiniowanymi typami.
+Drugi zestaw: TYPED_TEST_CASE_P, REGISTER_TYPED_TEST_CASE_P, INSTANTIATE_TYPED_TEST_CASE_P pozwala na zdefiniowanie ciała TC przed zadelkarowaniem typów, na których test będzie przeprowadzany.
+Oba zestawienia makr potrzebują uprzednio zdefiniowanej klasy szablonowej dziedziczącej po ::testing::Test pełniącej rolę fixtury dla TCów oraz listy typów zapisanych przy pomocy ::testing::Types.
+TYPED_TEST_CASE pozwala zadelkarować, że TC korzystający z fixtury podanej jako pierwszy paramete będzie przyjmował typy podane jako drugi z parametrów. W celu zdefiniowania ciała TC należy skorzystać z TYPED_TEST podając jako parametry nazwę fixtury oraz nazwę zamego TC.
+Poniżej przykład omówionej poniżej definicji testu szablonowego ze znanymi na początku typami.
+
+TODO template TC 1 code
+
+W przypdaku kiedy checmy zdefiniować ciała TCów wcześniej niż zdefiniowanie typów, które będziemy testować należy zadeklarować, że fixtura będzie używana w testach szablonowych przy pomocy TYPED_TEST_CASE_P, następnie korzystając z TYPED_TEST_P zdefiniować ciało TC (parametry: mazwa fixtury oraz nazwa TC). Tak przygotowany TC należy następnie zarejestrować - REGISTER_TYPED_TEST_CASE_P z nazwą fixtury oraz nazwą TC.
+Kolejny z kroków wymaga już znajomości typów, które będą sprawdzane. INSTANTIATE_TYPED_TEST_CASE_P przyjmuje nazwę pomocniczą, nazwę fixtury oraz typy do sprawdzenia.
+Tak jak we wcześniejszym przypadku klasa fixtury jest klasą szablonową dziedziczącą po ::testing::Test, a typy trzymane są w strukturze ::testing::Types.
+Poniżej przykład definicji testu szablonowego z przesuniętą deklaracją testowanych typów.
+
+TODO template TC 1 code
+
+Sposób prezentacji wyników testów
+Formatowanie komunikatów o błędach
+Sterowanie wykonywaniem testów
+Ustawienia formatu wyjściowego uruchomionych testów
+
+
+
+
+
+
+
+
+
+
+
+Użycie szablonów powoduję, że to kompilator często decyduję, którą instance sparametryzowanej funkcji wywołać, a co za tym idzie zdarzają się sytuację kiedy wywoływana jest inna metoda niż ta przewidziana przez programiste. 
