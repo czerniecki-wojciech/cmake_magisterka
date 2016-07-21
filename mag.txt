@@ -13,13 +13,13 @@ Obsługa wyjątków
 Sposoby przygotowania środowiska przed rozpoczęciem testu
 Testy parametryzowane
 Testy z użyciem szablonów
-Sposób prezentacji wyników testów
 Formatowanie komunikatów o błędach
 Sterowanie wykonywaniem testów
 Ustawienia formatu wyjściowego uruchomionych testów
 Zebranie i analiza wyników badań
+Sposób prezentacji wyników testów
 
-
+TODO kryteria ocen
 
 
 W jakim kierunku można rozwinąć pracę
@@ -246,6 +246,7 @@ Pierwszy zestaw składa się z makr: TYPED_TEST_CASE oraz TYPED_TEST. Zestaw ten
 Drugi zestaw: TYPED_TEST_CASE_P, REGISTER_TYPED_TEST_CASE_P, INSTANTIATE_TYPED_TEST_CASE_P pozwala na zdefiniowanie ciała TC przed zadelkarowaniem typów, na których test będzie przeprowadzany.
 Oba zestawienia makr potrzebują uprzednio zdefiniowanej klasy szablonowej dziedziczącej po ::testing::Test pełniącej rolę fixtury dla TCów oraz listy typów zapisanych przy pomocy ::testing::Types.
 TYPED_TEST_CASE pozwala zadelkarować, że TC korzystający z fixtury podanej jako pierwszy paramete będzie przyjmował typy podane jako drugi z parametrów. W celu zdefiniowania ciała TC należy skorzystać z TYPED_TEST podając jako parametry nazwę fixtury oraz nazwę zamego TC.
+Do odwołania się do testowanego typu służy słowo kluczowe TypeParam.
 Poniżej przykład omówionej poniżej definicji testu szablonowego ze znanymi na początku typami.
 
 TODO template TC 1 code
@@ -255,19 +256,229 @@ Kolejny z kroków wymaga już znajomości typów, które będą sprawdzane. INST
 Tak jak we wcześniejszym przypadku klasa fixtury jest klasą szablonową dziedziczącą po ::testing::Test, a typy trzymane są w strukturze ::testing::Types.
 Poniżej przykład definicji testu szablonowego z przesuniętą deklaracją testowanych typów.
 
-TODO template TC 1 code
+TODO template TC 2 code
 
-Sposób prezentacji wyników testów
 Formatowanie komunikatów o błędach
+
+Asercje porównujące dwie wartości przy pomocy operatorów porównania wymagają, aby porównywane wartości mogły być wypisywane przez domyślny strumień wyjściowy (korzystając z operatora operator<<(std::ostream&, ArgumentType const&)). 
+Nie każdy z porównywanych typów posiada zdefiniowany taki operator, nawet w momencie kiedy porówywanie przy pomocy operatora == jest możliwe. Można taki operator na potrzeby testu zdefiniować, jednak takie podejście może spotkać z paroma problemami.
+Kiedy programista pisze moduł udostępniany dla innych użytkowników nie powinien rozbudowywać interfejsu o metody używane tylko w testach. Jest to podejście ogólnie przyjęte, ale można zrobić od niego wyjątek jeśli docelowi użytkownicy potrzebują także skorzystać z tego operatora.
+W przypadku jeśli operator wypisania jest już zdefiniowany, ale nie pełni roli przewidzianej w bibliotece do testów jednostkowych (czyli wypisania wartości porównywanych) w momencie porównania zakończonego niepowodzeniem nie uzyskamy informacji pozwalających jednoznacznie określić przyczynę błędu.
+Jeśli operator wypisania jest już zdefiniowany, ale pełni inną funkcję, otrzymamy niespójny komunikat o błędzie.
+Twórcy bibliotek do testów jednostkowych przewidzieli powyższe sytuacje oraz przygotowali rozwiązania powyższych problemów.
+
+Formatowanie komunikatów o błędach - bibliotek Boost unittest
+
+Bibliotek Boost unittest dostarcza dwa podejścia do wcześniej wymienionych problemów.
+Pierwsze z nich rozwiązuje problem kiedy operator wypisania jest już wykorzystywany w inny niż spodziewany przez bibliotekę sposób. Makro BOOST_TEST_DONT_PRINT_LOG_VALUE pozwala na wyłączenie wypisywania wartości porównywanych obieków, czyli operator wypisania jest w tym momencie nieużywany i może pełnić inną funkcję.
+
+TODO kod z wyłączeniem printowania wartości
+
+Drugie podejście pozwala na wypisanie wartości obiektu jeśli operator wypisania nie jest zdefiniowany i z jakiegoś powodu nie powinien być dostępny dla porównywanych obiektów.
+W czasie prowadzenia badań zostały napisane testy pozwalające na wypisanie wartości klasy std::vector<T>, która domyślnie nie ma zdefiniowanego sposobu wypisania danych.
+Pierwszym krokiem potrzebnym do stworzenia wyspecjalizowanego sposobu prezentacji porównywanych danych jest skorzystanie z wcześniej omawianego makra BOOST_<LEVEL>, sprawdzającego czy podany argument jest prawdą. Kolejnym krokiem jest stworzenie predykatu, który będzie przyjmował porównywane typy oraz zwracał obiekt klasy boost::test_tools::predicate_result - jest to obiekt pozwalający na formatowanie komunikatu o błędzie, lub wartości logicznej true.
+Tak zdefiniwany komunikat powinien zwrócić wartość logiczną true w momencie stwierdzenia prawdziwości sprawdzanego warunku (w opisywanym przykładzie równości dwóch obiktów klasy std::vector<T>) lub sformatowy komuniat o błędzie w przeciwnym wypadku.
+Zdefiniowany predykat należy podać do wcześniej wspomnianego makra BOOST_<LEVEL>
+Poniżej prezentacja kodu realizującego powyższą funkcjonalność (w założeniu, że tym T posiada operator porównania oraz wypisania).
+
+TODO custom predicate code boost
+
+Formatowanie komunikatów o błędach - bibliotek Google test
+
+Google test podobnie jak Boost test pozwala na stworzenie predykatu do porównywania złożonych typów w niestandardowy sposób. W badaniach dla porównania napisano taki sam predykat jak w przypadku poprzednio omawianej biblioteki, choć nie był on wymagany (Google test radzi sobie z wypisywaniem obiektów std::vector).
+Zdefiniowany predykat jest tożsamy ideologicznie z odpowiednikiem omawianym wcześniej. Zamiast typu boost::test_tools::predicate_result korzysta z ::testing::AssertionResult oraz zamiast wartości logicznej true w momencie porównywania zakończonego sukcjesem zwraca wartość zwracaną przez ::testing::AssertionSuccess().
+Predykat można stosować z opowiednikiem BOOST_<LEVEL> - makrem <LEVEL>_TRUE lub zastosować dedykowane makro EXPECT_PRED_FORMAT<X> (X określa ilość parametrów podawanych w predykacie), które jako parametry przyjmuję referencję predykatu oraz porównywane wartości.
+
+TODO custom predicate code google
+
+W przypadku jeśli operator wypisania dla porównywanych obiektów nie istnieje korzystając z biblioteki Google test trzeba go zdefiniwować - biblioteka nie posiada opcji wyłącznie wypisywania wartości porównywanych obiektów. Obejściem tego problemu jest zdefiniowanie predykatu, który zwróci informacje tylko o tym, że porównanie zakończyło się wynikiem negatywnym.
+Wsród możliwości biblioteki znajdziemy natomiast możliwość dołączenia dodatkowych informacji do raportu o błedach poprzez skorzystanie z metody ::testing::PrintToString przyjmującej jako paramtr obiekt klasy posiadającej możliwość wypisania na strumień standardowy.
+Poniżej przykład dodawania dodatkowej informacji do komunikatu o błędzie.
+
+TODO custom output on assertion failure code
+
 Sterowanie wykonywaniem testów
+
+W idealnym świecie programistów każdy kod powinien być pisany wg metodologii Test Driven Development - czyli testy do kodu powinny powstać przed implementacją bazując na zdefiniowanych interfejsach.
+Jeśli programista lub zespół programistyczny pracujący w TDD implementuje swoją funkcjonalność dużym udogonieniem jest uruchamianie tylko tych testów, których ona dotyczy. Takie podejści pozwala skupić się na błędach powiązanych z obecną implementacją pomijając błędy wygenerowane przez jeszcze nie istniejące fragmenty kodu.
+Istnieją dwa rozwiązania, które mogą spełnić powyższe wymagania. Pierwsze z nich to wyłącznie testów powiązanych z nieistnijącym kodem, drugie natomiast zakłada uruchomienie tylko tych testów, które są z punktu widzenia użytkowników ważne.
+
+Sterowanie wykonywaniem testów - biblioteka Boost unittest
+
+Biblioteka posiada wiele metod sterowania wykonywaniem testów począwszy od wyłącznia pojedyńczych TC w kodzie przez wyłączenie całych TS, uruchamianie TC oraz TS zależnie od wartości zmiennych statycznych, wybieranie testów do uruchomienia z poziomu lini poleceń aż poprzez zarządzanie wykonaniem testu zależnie od statusu poprzednich testów.
+Makra BOOST_AUTO_TEST_CASE oraz BOOST_AUTO_TEST_SUITE przyjmują jako drugi z parametrów status aktywności.
+W najprostszym przypaku - jego braku jest on interpretowany jako zawsze włączony. Może on być zmieniony na * boost::unit_test::disabled() w celu całkowitego wyłączenia TC bądź TS z wykonywania. 
+Pozostałe opcje to ustawienie statusu na * boost::unit_test::enable_if<const_bool_var_name>(), który zależny jest od zmiennej logicznej const_bool_var_name (wartość logiczna true oznacza włączenie wykonywania testu, warunek jest sprawdzany podczas kompilacji) oraz * boost::unit_test::precondition, który przyjmuje referencje funktora (klasy posiadającej operator()). Zależnie od wyniku wywołania funktora test jest uruchamiany lub też nie. Ważnym elementem jest to, że boost::unit_test::precondition interpretowany jest już w czasie działania aplikacji, więc można zastowosać w nim zależności między testami.
+Poniżej przykład zaczerpnięty z dokumentacji biblioteki Boost unittest demonstrujący selektywne uruchamianie TC zależnie od wyniku wcześniejszych TC.
+
+#define BOOST_TEST_MODULE decorator_08
+#include <boost/test/included/unit_test.hpp>
+namespace utf = boost::unit_test;
+namespace tt = boost::test_tools;
+
+BOOST_AUTO_TEST_CASE(test1)
+{
+  BOOST_TEST(true);
+}
+
+BOOST_AUTO_TEST_CASE(test2)
+{
+  BOOST_TEST(false);
+}
+
+struct if_either
+{
+  std::string tc1, tc2;
+  if_either(std::string t1, std::string t2)
+    : tc1(t1), tc2(t2) {}
+
+  tt::assertion_result operator()(utf::test_unit_id)
+  {
+    auto& master = utf::framework::master_test_suite();
+    auto& collector = utf::results_collector_t::instance();
+    auto& test1_result = collector.results(master.get(tc1));
+    auto& test2_result = collector.results(master.get(tc2));
+
+    if (test1_result.passed() || test2_result.passed())
+      return true;
+
+    tt::assertion_result ans(false);
+    ans.message() << tc1 << " and " << tc2 << " failed";
+    return ans;
+  }
+};
+
+BOOST_AUTO_TEST_CASE(test3,
+  * utf::precondition(if_either("test1", "test2")))
+{
+  BOOST_TEST(false);
+}
+
+BOOST_AUTO_TEST_CASE(test4,
+  * utf::precondition(if_either("test2", "test3")))
+{
+  BOOST_TEST(false);
+}
+
+Dodatkową opcją, dzięki której można wybrać testy do uruchomienia jest skorzystanie z flagi --run_test=X, gdzie X określa, które testy mają być uruchomione. X może przyjąc postać wyrażenie regularnego, dzięki czemu możemy odpalić przykładowo wszystkie testy w danej TS.
+
+Sterowanie wykonywaniem testów - biblioteka Google test
+
+Bibliotek do testów jednostkowych od Google zawiera podobny mechanizm do uruchamian testów z poziomu wiersza poleceń jak odpowiednik Boost unittest.
+Przy pomocy flagi --gtest_list_tests można podejrzeć całe drzewo testów, a stosując flagę 
+--gtest_filter=X można wybrać, któe z testów uruchomić. Podobnie jak poprzednik biblioteka jako X przyjmuje wyrażenia regularne.
+Wyłaczenie testów z poziomu kodu możliwe jest dzięki dodaniu przedrostka DISABLED_ do nazwy TC w momencie jego definicji, przykładowo:
+
+TEST(TS_NAME, DISABLED_TC_NAME)
+
+Tymczasowe włączenie wszystkich wyłączonych powyższym sposobem testów można osiągnąć definiująć GTEST_ALSO_RUN_DISABLED_TESTS w kodzie wartością różną od zera.
+Oprócz omówionych powyżej funkcjonalności zarządzania wykonywaniem się testów dostępne są dwie dodatkowe opcje: powtarzanie testów N razy oraz losowanie kolejności uruchamiana testów.
+Jako liczbę powtórzeń testów można przyjąć liczbę całkowitą większą od zera - wtedy test wykona się dokładnie tyle razy ile podano jako parametr flagi --gtest_repeat=N, lub podać wartość ujemną oznaczająco powtarzanie w nieskończoność. Opcja z powtarzaniem testów w nieskończoność jest przydatna w przypadku bardzo rzadkich losowych niepowodzeń w testach.
+Losowanie kolejności testów można osiągnąć na dwa sposoby. Pierwszy to zastosowanie flagi --gtest_shuffle na pliku uruchamiającym testy oraz zdefiniowanie GTEST_SHUFFLE jako jeden w kodzie programu (testy będą zawsze uruchamiane w losowej kolejności).
+
 Ustawienia formatu wyjściowego uruchomionych testów
 
+Ustawienie formatu wejściwego jest opcją szczególnie przydatną w momencie kiedy testy będą uruchamiane na specjalnie do tego celu przygotowanych maszynach wyposażonych w środowiska testowe. W takim systemie pracy zebranie informacji o testach w postaci innej niż status wypisany w konsoli jest przydatny ze względu na łatwiejszą możliwość powiadamiania użytkowników tych maszyn co dokładnie było przyczyną niepowodzenia testów.
+Oba z frawmeworków - Boost unittest oraz Google test zapewniają eksport wyników testów do foramtu XML. Dodatkowo biblioteka Boost unittest oferuje możliwość włączenie generowania raportowanie do pliku XML z poziomu kodu testów. Atutem Google test jest możliwość dodania dodatkowych informacji do generowanego raportu XML przy pomocy funkcji 	RecordProperty przyjmującej jako pierwszy parametr nazwę własności do zapisania oraz drugi parametr jako dowolny typ danych, który posiada operato wypisania na strumień domyślny.
+
+Sposób prezentacji wyników testów
+
+Jedną z ważnych cech testów jednostkowych jest prezentacja wyników zarówno tych pozytywanych jak i negatywnych. Prezentacja powodów z jakich dany test został uznany za zakończony niepowodzeniem powinna być jednoznacza i dokładnie określać gdzie dany błąd wystąpił.
+W rozdziale "Formatowanie komunikatów o błędach" opisano luki w sposobie wypisywania wyników testów oraz sposoby jak je rozszerzyć.
+Biblioteka Boost unittest w domyślnej konfiguracji nie wyświetla żadnych informacji w sytacji kiedy testy kończą się powodzeniem, natomiast w przypadku błędu wyświetla komunikat zbliżony do informacji kompilatora w momencie znalezienia błędu w kodzie.
+Przykład komunikatu o błędzie w bibliotece Boost unittest znajduje się poniżej.
+
+test.cpp(14): error: in "suite1/test2": check 2 != 2 has failed [2 == 2]
+
+Bibloteka Google test w domyślnej konfiguracji wyświetla informację o każdym teście dzięki czemu można na bieżąco śledzić postęp ich wykonywania. Niestety w przypadku napotkania więcej niż jednego błędu z powodu dużej ilości danych tak prezentowany wynik staje się mało czytelny. Przykład z testów zakończonych powodzeniem oraz testów, w których wykryto błędy znajduje się poniżej.
+
+[==========] Running 4 tests from 2 test cases.
+[----------] Global test environment set-up.
+[----------] 2 tests from TestCase1
+[ RUN      ] TestCase1.Fatal
+[       OK ] TestCase1.Fatal (0 ms)
+[ RUN      ] TestCase1.Fatal1
+[       OK ] TestCase1.Fatal1 (0 ms)
+[----------] 2 tests from TestCase1 (1 ms total)
+
+[----------] 2 tests from TestCase2
+[ RUN      ] TestCase2.Fatal
+[       OK ] TestCase2.Fatal (0 ms)
+[ RUN      ] TestCase2.Fatal1
+[       OK ] TestCase2.Fatal1 (0 ms)
+[----------] 2 tests from TestCase2 (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 2 test cases ran. (4 ms total)
+[  PASSED  ] 4 tests.
 
 
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from TestCase1
+[ RUN      ] TestCase1.VectorTest
+D:\cmake_magisterka\gtest_custom_predicate_support\test\main.cpp(63): error: Value of: compareVectors(v1, v2)
+  Actual: false (Different vectors:
+v1 = [1, 2, 3, 4]
+
+v2 = [2, 2, 3, 4])
+Expected: true
+D:\cmake_magisterka\gtest_custom_predicate_support\test\main.cpp(64): error: Value of: compareVectors(v1, v3)
+  Actual: false (Vectors have different size: 4 != 3)
+Expected: true
+D:\cmake_magisterka\gtest_custom_predicate_support\test\main.cpp(67): error: Different vectors:
+v1 = [1, 2, 3, 4]
+
+v2 = [2, 2, 3, 4] First arg name: v1. Second arg name: v2
+D:\cmake_magisterka\gtest_custom_predicate_support\test\main.cpp(68): error: Vectors have different size: 4 != 3 First arg name: v1. Second arg name: v3
+D:\cmake_magisterka\gtest_custom_predicate_support\test\main.cpp(70): error: Expected: (100.0f) <= (99.0f)
+  Actual: 100 vs 99
+D:\cmake_magisterka\gtest_custom_predicate_support\test\main.cpp(71): error: Expected: (100.0) <= (99.0)
+  Actual: 100 vs 99
+[  FAILED  ] TestCase1.VectorTest (32 ms)
+[----------] 1 test from TestCase1 (33 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (47 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] TestCase1.VectorTest
+
+ 1 FAILED TEST
 
 
+Dodatkowe funkcje biblioteki Boost unittest
 
+Punkty kontrolne
 
+Punkt kontrolny realizowany za pomocą makra BOOST_TEST_CHECKPOINT pomaga w łatwy sposób przeanalizować przyczynę błędu poprzez wypisanie wiadomości z ostatniego napotkanego punktu kontrolnego (przykład poniżej).
+
+TODO checkpoint
+
+Testowanie strumienia wyjściowego
+
+Klasa boost::test_tools::output_test_stream zapewnia możliwość testowania wyjścia aplikacjia na strumień wejściowy (domyślny, pliku lub inny). Dzięki takiej możliwości istnieje możliwość zweryfikowania poprawności informacji wyświetlanych użytkownikowi lub sprawdzenie czy poprawne dane zostały zapisane do pliku bez konieczności jego tworzeni, a następnie wczytywania w celu analizy zapisanych danych.
+Przykład testu klasy PrintingComponent znajduje się poniżej.
+
+TODO ostream test
+
+Spodziewane niepowodzenia w przypadkach testowych
+
+Boost unittest zapewnia możliwość określenia niepowodzeń w ramach pojedyńczego TC, które nie będą powodować uznania jego całego za zakończony niepowodzeniem. Do tego celu służy makro BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES przyjmujace dwa parametry nazwę TC oraz maksymalną ilość niespełnionych asercji (przykład poniżej).
+
+TODO expected asserttion fail
+
+Wyświetlanie dodatkowych wiadomości podczas wykonywania testów.
+
+Makro BOOST_TEST_MESSAGE pozwala wyświetlić dodatkową informację w czasie wykonywania testów. To rozwiązanie jest przydatne w momencie kiedy programista nie ma możliwości zdebagowania kodu, a potrzebna jest mu wiedza na temat wartości zmiennej lub chce sprawdzić czy dany fragment kodu został osiągnięty.
+
+TODO test message
+
+Dodatkowe funkcje biblioteki Google test
+
+Death tests - testy sprawdzające warunki kończące pracę aplikacji
+
+Niektóre scenariusze działania aplikacji wymagają, aby poprawnie obsłużyć operację powodującą nagłe zakończenie jej pracy. W takich wytuacjach ważne jest sprawdzenie czy powód, przez który skończyła się jej praca jest wyświetlony dla użytkownika w celu przykładowo korekcji danych wejściowych lub wskazania lokalizacji pliki dziennika zawierającego scenariusz realizowany przed zakończeniem pracy aplikacji.
 
 
 
