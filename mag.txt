@@ -446,14 +446,17 @@ D:\cmake_magisterka\gtest_custom_predicate_support\test\main.cpp(71): error: Exp
 
  1 FAILED TEST
 
-
-Dodatkowe funkcje biblioteki Boost unittest
-
 Punkty kontrolne
 
-Punkt kontrolny realizowany za pomocą makra BOOST_TEST_CHECKPOINT pomaga w łatwy sposób przeanalizować przyczynę błędu poprzez wypisanie wiadomości z ostatniego napotkanego punktu kontrolnego (przykład poniżej).
+Punkt kontrolny pomaga w łatwy sposób przeanalizować przyczynę błędu poprzez wypisanie wiadomości z ostatniego napotkanego punktu kontrolnego. W przypadku biblioteki Boost unittest jest on realizowany za pomocą makra BOOST_TEST_CHECKPOINT (przykład poniżej).
 
-TODO checkpoint
+TODO checkpoint boost
+
+Odpowiednikiem makra BOOST_TEST_CHECKPOINT w bibliotece Google test jest makro SCOPED_TRACE, którego zasada działania jest taka sama jak odpowiednika z biblioteki Boost.
+
+TODO scoped trace
+
+Dodatkowe funkcje biblioteki Boost unittest
 
 Testowanie strumienia wyjściowego
 
@@ -479,8 +482,31 @@ Dodatkowe funkcje biblioteki Google test
 Death tests - testy sprawdzające warunki kończące pracę aplikacji
 
 Niektóre scenariusze działania aplikacji wymagają, aby poprawnie obsłużyć operację powodującą nagłe zakończenie jej pracy. W takich wytuacjach ważne jest sprawdzenie czy powód, przez który skończyła się jej praca jest wyświetlony dla użytkownika w celu przykładowo korekcji danych wejściowych lub wskazania lokalizacji pliki dziennika zawierającego scenariusz realizowany przed zakończeniem pracy aplikacji.
+Do tego celu przeznaczona zestaw makr <LEVEL>_DEATH, <LEVEL>_DEATH_IF_SUPPORTED oraz <LEVEL>_EXIT. 
+Pierwsze dwa przyjmują jako pierwszy parametr kod do wykonania w osobnym wątku oraz wyrażenie regularne, które służy do sprawdzenia czy na strumieniu std::cerr znalazła się interesująca z punktu widzenia testu informacja. Różnica między pierwszym a drugim makrem jest taka, że drugie z nich sprawdza czy uruchomienie procesu w osobnym wątku jest możliwe na danej platformie a nastepnie wykonuje operacje z pierwszego makra. Jeśli operacja ta jest niemożliwa <LEVEL>_DEATH_IF_SUPPORTED nie wykonuje żadnych czynności.
+Makro <LEVEL>_EXIT oprócz sprawdzania wiadomości na strumieniu std::cerr sprawdza czy aplikacja została zakończona z odpowiednim kodem błędu.
+Poniżej przykład użycia omówionych powyżej makr.
 
+TODO death test
 
+Testowanie kodu produkcyjnego
 
+W testach jednostkowych zazwyczaj mamy dostęp tylko do elementów udosepnionych publicznie testowanyh klas. W przypadku kiedy testowanie wartości z dostępem protected lub private jest wymagane w celu stwierdzenia poprawności działania algorytmu Google test dostarcza nagłówek gtest\gtest_prod.h, w którym zdefiniowane jest makro FRIEND_TEST.
+Makro FRIEND_TEST pozwala określić, który z testów ma mieć dostęp do zmiennych niewidocznych publicznie, poprzez określenie go poprzez podanie nazwy TS oraz nazwy TC.
 
-Użycie szablonów powoduję, że to kompilator często decyduję, którą instance sparametryzowanej funkcji wywołać, a co za tym idzie zdarzają się sytuację kiedy wywoływana jest inna metoda niż ta przewidziana przez programiste. 
+TODO prod code test
+
+Używanie asercji poza kodem przypadku testowego
+
+W przypadku Boost unittest nie ma możliwości wywoływania asercji w innym miejscu niż w kodzie TC. W bibliotece Google test jest to możliwe jeżeli zastosujemy makro <LEVEL>_NO_FATAL_FAILURE.
+<LEVEL>_NO_FATAL_FAILURE pozwala na wywołanie funkcji z poziomu zasięgu TC, która będzie posiadała w sobie makro asercji. Dzięki takiemu zabiegowi można przygotować dedykowane funkcje do testowania właściwości klasy, które będą wspólne dla wielu TC i będą mogły być wywołane w każdym miejscu TC. Poniżej przykład użycia makra <LEVEL>_NO_FATAL_FAILURE.
+
+TODO subroutine code
+
+Asercje zależne od typów
+
+Google test dostarcza funkcje szablonową służącą do weryfikacji tożsamości typów - ::testing::StaticAssertTypeEq. Funkcja jako parametry szablonu przyjmuje dwa typy danych oraz po jej wywołaniu określa czy są one takie same.
+Weryfikacja typów jest szczególnie potrzebna w sytuacjach kiedy użycie szablonów powodując, że to kompilator często decyduje, którą instance sparametryzowanej funkcji wywołać, a co za tym idzie zdarzają się sytuację kiedy wywoływana jest inna metoda niż ta przewidziana przez programiste.
+Przykład weryfikacji typów został zamieszczony poniżej.
+
+TODO type assertion google
