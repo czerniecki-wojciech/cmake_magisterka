@@ -22,6 +22,24 @@ Sposób prezentacji wyników testów
 TODO kryteria ocen
 
 
+Wstęp
+
+Miniejsza praca ma na celu opisanie możliwości dwóch najbardziej znanych bibliotek służących do pisania testów jednostkowych - biblioteki Boost unittest oraz biblioteki Google test.
+Poprzez test jednostkowy rozumie się kod, który testuje inny framgment kodu w odosobnionym środowisku w kontrolowanych warunkach. Kod testowany jest poprzez uruchomienie go na przygotowanych danych oraz weryfikację czy otrzymany wynik jest zgodny z oczekiwanym.
+Testy jednostkowe służa przede wszystkim wykryciu błędów logicznych w aplikacji poprzez weryfikację możliwie najmnijszego zakresu jej funkcjonalności. Dobrze napisane testy pozwalają zweryfikować działanie całego systemu bez potrzeby uruchamiania go. Dodatkowo dobrze napisane testy pozwalają uchronić się przed pomyłkami związanymi z rozbudową aplikacji bądź pozwalają zachować spójność działania w momencie refaktoringu kodu (TODO link źródła http://devstyle.pl/2011/08/11/ut-1-co-to-sa-testy-i-po-co-sa-testy-jednostkowe/).
+Dodatkowo dobrze napisane testy pełnią rolę dukumentacji dla poszczególnych funkcjonalności testowanej aplikacji.
+Praca ma za zadanie wprowadzenie do każdej z omawianych bibliotek oraz ukazanie podobieństw i róźnic między nimi.
+Na samym początku pracy znajduje się opis środowiska testowego, w którym realizowana była część badawcza. Następne rozdziały będą ukazywały oraz omawiały uzyskane wyniki.
+Analiza rozpocznie się od porównania definicji pojedyńczego testu, następnie opisany jest sposób grupowania testów. Kolejny rozdział omówi podstawowe narzędzie weryfikacji poprwności danych w testach - asercje.
+Następne z omawianych tematów to sposoby porównywania liczb zmiennoprzecinkowych oraz weryfikacja wyjątków rzucanych przez testowany kod. Przygotowanie środowiska testowego dla testów jednostkowych oraz redukcja ilości testów poprzez wykorzystanie testów parametryzowanych będą omówione jako kolejne z rozdziałów.
+Z powodu dosyć powszechnego stosowania szablonów języku C++ opisze także metody weryfikacji w omawianych bibliotekach oparte na pracy z różnymi typami danych.
+Kolejna część pracy będzie ukazywała możliwości wpływania na komunikaty wyświetlane przez porównywane frameworki, sposób sterowania procesem uruchamiania testów oraz sposoblem generowania wyników do postaci, która umożliwia korzystanie z systemów budowania na serwerach ciągłej integracji (z and. CI).
+Następnie omówiony zostanie sposób domyślnego wypisywania informacji o uruchomionych testach z poziomu wiersza poleceń oraz sposoby zaznaczenia punktów kontrolnych w testach w celu ułatienia weryfikacji testów kończących się wynikiem negatywnym
+Kolejne rozdziały będą omawiać funkcje charakterystyczne dla każdej z badanych bibliotek.
+W przypadku biblioteki Boost unittest będą to: możliwość testowania strumienie wyjściowego aplikacji, ustawienie spodziewanej liczby porównań zakończonych niepowodzeniem oraz sposoby wyświetlania dodatkowych inforamcji w czasie wykonywania testów.
+Charakterystycznymi cechami biblioteki Google test omówionymi w pracy będą: death testy (testy sprawdzające zachowanie aplikacji, która zmuszona jest do zaprzestania swojego działania), możliwość testowania danych obiektów, które nie są dostępne z poziomu interfejsu publicznego ich klas, sposoby używania asercji poza kodem testu oraz możliwości weryfikacji typów danych.
+Ostatnie rozdziały tej pracy to ocena badanych bibliotek względem przyjętych kryteriów oceny oraz podsumowanie.
+
 W jakim kierunku można rozwinąć pracę
 Ocena krytyczna pracy
 
