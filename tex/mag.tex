@@ -1,3 +1,69 @@
+\documentclass[12pt,a4paper,notitlepage]{report}
+\usepackage{polski}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{indentfirst}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[top=2cm, bottom=2cm, left=3cm, right=3cm]{geometry}
+\makeatletter
+\newcommand{\linia}{\rule{\linewidth}{0.4mm}}
+\renewcommand{\maketitle}{
+	\begin{titlepage}
+		\vspace*{1cm}
+		\begin{center}\small
+			Politechnika Wrocławksa\\
+			Wydział Elektorniki
+		\end{center}
+		\vspace{3cm}
+		\noindent
+		\linia
+		\begin{center}
+			\LARGE \textsc{\@title}
+		\end{center}
+		\linia
+		\vspace{5.5cm}
+		\begin{flushright}
+			\begin{minipage}{5cm}
+				\textit{\small Autorzy:}\\
+				\normalsize \textsc{\@author} \par
+			\end{minipage}
+		\end{flushright}
+		\vspace*{\stretch{6}}
+		\begin{center}
+			\@date
+		\end{center}
+	\end{titlepage}%
+}
+\makeatother
+
+\author{Marcelina Chyży\\numer indeksu 195939\\Wojciech Czerniecki\\numer indeksu 195986}
+\title{Układy Cyfrowe i Systemy Wbudowane \\ \small Laboratorium 2}
+
+\newcommand{\mychapter}[2]{
+    \setcounter{chapter}{#1}
+    \setcounter{section}{0}
+    \chapter*{#2}
+    \addcontentsline{toc}{chapter}{#2}
+}
+
+\begin{document}
+	%\maketitle
+	\includepdf[pages={1}]{pd_inz.pdf}
+	
+	\newpage\thispagestyle{empty}
+	\mbox{}
+	
+	\tableofcontents
+	
+	\renewcommand*\sectionmark[1]{\markboth{#1}{}}
+	\renewcommand*\subsectionmark[1]{\markright{#1}}
+	
 1. Wstęp
 2. Wprowadzenie
 3. Po co są testy jednostkowe
@@ -21,8 +87,10 @@ Sposób prezentacji wyników testów
 
 TODO kryteria ocen
 
+W jakim kierunku można rozwinąć pracę
+Ocena krytyczna pracy
 
-Wstęp
+\chapter{Wstęp}
 
 Miniejsza praca ma na celu opisanie możliwości dwóch najbardziej znanych bibliotek służących do pisania testów jednostkowych - biblioteki Boost unittest oraz biblioteki Google test.
 Poprzez test jednostkowy rozumie się kod, który testuje inny framgment kodu w odosobnionym środowisku w kontrolowanych warunkach. Kod testowany jest poprzez uruchomienie go na przygotowanych danych oraz weryfikację czy otrzymany wynik jest zgodny z oczekiwanym.
@@ -40,10 +108,7 @@ W przypadku biblioteki Boost unittest będą to: możliwość testowania strumie
 Charakterystycznymi cechami biblioteki Google test omówionymi w pracy będą: death testy (testy sprawdzające zachowanie aplikacji, która zmuszona jest do zaprzestania swojego działania), możliwość testowania danych obiektów, które nie są dostępne z poziomu interfejsu publicznego ich klas, sposoby używania asercji poza kodem testu oraz możliwości weryfikacji typów danych.
 Ostatnie rozdziały tej pracy to ocena badanych bibliotek względem przyjętych kryteriów oceny oraz podsumowanie.
 
-W jakim kierunku można rozwinąć pracę
-Ocena krytyczna pracy
-
-Przyjęty sposób prowadzenia badań
+\chapter{Przyjęty sposób prowadzenia badań}
 
 Podczas realizacji badań przyjęto kilka założeń, które oprócz usystematyzowania prac starają się uczynić wyniki jak najbardziej czytelne.
 Projekt został stworzony przy pomocy systemu budowania CMake [TODO link].
@@ -51,14 +116,14 @@ Każdy z zareprezentowanych testów znajduję się w osobnym katalogu, wewnątrz
 W głównym katalogu projektu znajdują się także foldery include - zawierający pliki nagłówkowe badanych bibliotek, oraz lib - katalog zawierający wcześniej skompilowane biblioteki dynamiczne badanych srodowisk do testów jednostkowych.
 W momencie budowania tworzony jest katalog bin, w którym umieszczane są już skompilowane pliki wykonywalne testów służące do ich uruchomienia oraz pliki przykładowych programów o ile takie zostały dołączone do prezentowanych przykładów.
 
-Opis przeprowadzonych badań
+\chapter{Opis przeprowadzonych badań}
 
 W celu pozyskania wiedzy potrzebnej do przeprowadzenie analizy porównawczej wykonane zostały testy jednostkowe, których zadaniem było ukazanie podobieństw oraz różnic obu bibliotek. Wyniki pozyskane w ten sposób zostały uzupełnione poprzez studia literaturowe bazujące na dokumentacji dostępnej dla użytkowników bibliotek.
 W swoich badaniach przyjąłem założenie o nie uzupełnianiu pozyskanej z dokumentacji wiedzy analizując kod źrółowy obu frameworków, bo mogło by zakłócić idee, z którymi oba środowiska były dostarczane. W obu przypadkach językiem użytym do stworzenia bibliotek był język C++, więc teoretycznie możliwości obu bibliotek powinny być porównywalne.
 W czasie realizacji badań zostały przygotowane 37 testów (21 testów z biblioteki Boost oraz 16 testów z biblioteki Google), któe bazowały na wiedzy pozyskanej ze studiowanej dokumentacji.
 Badania zostały przeprowadzone na bibliotekach skompilowanych do plików bibliotek ładowanych dymamicznie (DLL TODO[X]). Testy zostały napisane, skompilowane oraz uruchomione w środowisku Microsoft Windows 7 przy użyciu środowiska Microsoft Visual Studio C++ w wersji Community 2015 wraz z dostarczonym z nim kompilatorem w wersji TODO[X].
 
-Definicja Testu w badanych bibliotekach.
+\chapter{Definicja Testu w badanych bibliotekach.}
 
 Obie biblioteki do definicji podstawowej jednostki w testach jednostkowych - przypadku testowego (z ang. test case, dalej TC) oferują podobne rozwiązania. Jednocześnie w obu przypdkach zalecane jest użycie makr w języku C++ do zdefiniowania TCu, co znacznie uławia pisanie testów oraz zwiększa produktywność podczas otestowywania całych modułów.
 Dodatkowym aspektem, który przemawia za użyciem makr jest łatwość rejestracji testów w "test runnerze", który odpowiada za uruchomienie testów.
@@ -71,7 +136,10 @@ Automatyczna generacja wraz z rejestracją przpadku testowego w bibliotece Boost
 
 TODO KOD
 
-Boost test pozwala na definiowanie testów bez przypisywania ich do grup testów (z ang. test suite). Do automatycznego wygenerowania TC służy makro BOOST_AUTO_TEST_CASE(nazwa){}
+Boost test pozwala na definiowanie testów bez przypisywania ich do grup testów (z ang. test suite). Do automatycznego wygenerowania TC służy makro 
+BOOST_AUTO_TEST_CASE
+(nazwa)
+{}
 
 Definicja przypadku testego w bibliotece Google Test
 
@@ -85,7 +153,7 @@ Automatyczna generacja wraz z rejestracją przpadku testowego w bibliotece Googl
 
 TODO KOD
 
-Grupowanie testów
+\chapter{Grupowanie testów}
 
 W przypadku rozbudowanych programów posiadających setki testów powstaje potrzeba lepszego zarządzania nimi. Pierwszą z czynności, które przynoszą większe usystematyzowanie testów jest ich zgrupowanie. Dzięki takiemu zabiegowi łatwiej jest określić programiście, do której funkcjonalności przynależy dany TC.
 W testach jednostkowych grupę testów przynależących do danej funkcjonalności nosi miano już wspomnianego określenia test suite, dalej TS. 
@@ -96,7 +164,7 @@ Poniżej przykłady zastosowania grupowania testów w badanych bibliotekach.
 
 TODO rozpisać
 
-Podstawowe metody weryfikacji - asercje
+\chapter{Podstawowe metody weryfikacji - asercje}
 
 Podstawowym narzędziem służącym do weryfikacji poprawności działania programów w testach są asercje, czyli porównania między spodziewaną wartością działania algorytmu a wartością otrzymaną w trakcie działania programu.
 Wartości możemy porównywać na różne sposobu - nie tylko sprawdzając ich równość co do wartości spodziewanej ale również pokazując zależność między wartością spodziewaną a otrzymaną. W przypdaku obu bibliotek do porównywania wartości wykorzystywane są makra.
@@ -137,7 +205,7 @@ FAIL, ADD_FAILURE oraz ADD_FAILURE_AT przydają się w sytuacjach kiedy chcemy s
 Jednym z przydatnych makr jest makro <LEVEL>_NEAR(a, b, c). Przyjmuje ono trzy parametry - wartość sprawdzaną, wartość spodziewaną oraz odchylenie od wyniku. Makro sprawdza warunek b - c <= a <= b + c. Jesto ono przydatkne w momencie kiedy istnieje potrzeba czy wynik znajduję się w danym zakresie.
 Makra <LEVEL>_THROW, <LEVEL>_NO_THROW, <LEVEL>_ANY_THROW, <LEVEL>_FLOAT_EQ oraz <LEVEL>_DOUBLE_EQ zostaną omówione w dalszej części pracy. TODO
 
-Porównywanie liczb zmiennoprzecinkowych
+\chapter{Porównywanie liczb zmiennoprzecinkowych}
 
 Liczby zmiennoprzecinkowe są reprezentowane w pamieci komputera z pewną skończoną dokładnością, która zależy od wielkości reprezentacji liczby (TODO link do IEEE). Występowanie tej niedokładności wiąże się z tym, że liczby zmienno przecinkowe mogą się róźnić podczas porównywania - przykłądowo liczba typu double (podwójnej pracyzji) 1.0 dzielone przez 5.0 jest różna od 0.2.
 Do porównywania liczb uwzględniając ich niedokładność wymagane są odpowiednie metody.
@@ -158,7 +226,7 @@ W bibliotece Google test znajdziemy dwie asercje - jedną dla liczb pojedynczej 
 Oba z tych makr - <LEVEL>_FLOAT_EQ oraz <LEVEL>_DOUBLE_EQ porównują liczby z pominięciem ich niedokładności. W rozdziale poświęconym asercją (TODO numer rozdziału asercje) widzimy, że liczba 100.0f jest w swojej reprezentacji równa 100.00001f. W przypdaku liczb podwójnej precyzji błąd znajduje się na dalszym miejscu po przecinku niż w przypadku liczb pojedyńczej precyzji.
 Przykłady użycia obu makr znadują się w rozdziale poświęconym asercją (TODO numer rozdziału asercje).
 
-Obsługa wyjątków
+\chapter{Obsługa wyjątków}
 
 Niektóre programy swoją logikę opierają na obsłudze wyjątków. Takie podejście zmusza twórców bibliotek testowych do zapewnienia odpowiednich narzędzi także do weryfikacji programów opierających swoją logikę na takim sposobie działania. 
 
@@ -168,7 +236,7 @@ W przypadku biblioteki Boost unittest jej twórcy zapewnili dwa makra służące
 Drugie z makr BOOST_<LEVEL>_NO_THROW przyjmuje tylko kod, który nie powinien rzucić żadnego wyjątku, w przeciwnym wypadku asercja nie będzie spełniona, TC ją zawierający będzie uznany za zakończony niepowodzeniem.
 Przykłady użycia obu makr znadują się w rozdziale poświęconym asercją (TODO numer rozdziału asercje).
 
-Sposoby przygotowania środowiska przed rozpoczęciem testu
+\chapter{Sposoby przygotowania środowiska przed rozpoczęciem testu}
 
 Podczas pisania testów jednostkowych niekiedy, aby przetestować jedną funkcjonalność potrzebujemy uruchomić cały moduł. Operacja ta zależy od stopnia skomplikowania modułu, ale z punktu widzenia osoby piszącej testy wymaga napisania dodatkowego kodu. Dodatkowy kod powoduje, że intencja testu staje się niejasna. 
 Stosowanym rozwiązaniem jest przeniesienie inicjalizacji modułu do osobnej funkcji i wolanie jej w każdym TC. Takie podejście poprawia czytelność kodu - zamiast całej inicjalizacji wywołujemy funkcje, która za to odpowiada. Wadą takiego rozwiązania jest to, że programista musi pamiętać o tym, aby daną funkję wywołać.
@@ -217,7 +285,7 @@ Podobnie jak w przypadku Boost unittest inicjalizacja odbywa się przed uruchomi
 
 TODO kod fixtury globalnej
 
-Testy parametryzowane
+\chapter{Testy parametryzowane}
 
 Pisząc testy jenostkowe często spotyka się sytuacje, kiedy jedno zachowanie powinno być takie same dla paru zestawu danych wejściowych. W momencie kiedy zmuszeni jesteśmy przetestować stosunkkowo niewielką ilość zestawów danych nie jest to kłopotliwe, natomiast w miarę rozrastania się ich ilości zaczyna to generować problemy, z którymi programista musi sobie poradzić.
 Pierwszy z tych problemów to niepotrzebne powielania kodu ze względu na budowanie wielu podobnych TC różniących się między sobą tylko zestawem danych wejściowych. Kod stając się długi staje się też mniej czytelny.
@@ -244,7 +312,7 @@ Pierwszy z nich przymuje dwa parametry - nazwę pomocniczą służącą do rejes
 Zestaw danych można zdefiniować przy pomocy generatorów parametrów: Range, Values, ValuesIn oraz Bool. Range powoduję wygenerowanie liczb z danego zakresu z możliwością definiowania kroku, Values pozwala na zdefiniowanie wartości bezpośrednio w kodzie, ValuesIn pozwala na wczytanie parametrów z kontenera danych, a Bool sprawdza wynik dla wartości logicznych true i false.
 Poniżej przykład zastosowania generatora Values w testach parametryzowanych.
 
-Testy z użyciem szablonów
+\chapter{Testy z użyciem szablonów}
 
 Obecne standardy korzystania z języka C++ wymagają znajomości szablonów oraz ich wykorzystania do generowania kodu dla róźnych parametrów począwszy od zmiennych po całe klasy wyspecjalizowane. Aby przetestować tak wygenerowane fragmenty kodu należy zdefiniować testy dla każdej ze specjalizacji danej funkcjonalności.
 W przypadku kiedy testy dla różnych typów danych są identyczne w celu redukcji ilości kodu należy zastosować testy szablonowe.
@@ -276,7 +344,7 @@ Poniżej przykład definicji testu szablonowego z przesuniętą deklaracją test
 
 TODO template TC 2 code
 
-Formatowanie komunikatów o błędach
+\chapter{Formatowanie komunikatów o błędach}
 
 Asercje porównujące dwie wartości przy pomocy operatorów porównania wymagają, aby porównywane wartości mogły być wypisywane przez domyślny strumień wyjściowy (korzystając z operatora operator<<(std::ostream&, ArgumentType const&)). 
 Nie każdy z porównywanych typów posiada zdefiniowany taki operator, nawet w momencie kiedy porówywanie przy pomocy operatora == jest możliwe. Można taki operator na potrzeby testu zdefiniować, jednak takie podejście może spotkać z paroma problemami.
@@ -315,7 +383,7 @@ Poniżej przykład dodawania dodatkowej informacji do komunikatu o błędzie.
 
 TODO custom output on assertion failure code
 
-Sterowanie wykonywaniem testów
+\chapter{Sterowanie wykonywaniem testów}
 
 W idealnym świecie programistów każdy kod powinien być pisany wg metodologii Test Driven Development - czyli testy do kodu powinny powstać przed implementacją bazując na zdefiniowanych interfejsach.
 Jeśli programista lub zespół programistyczny pracujący w TDD implementuje swoją funkcjonalność dużym udogonieniem jest uruchamianie tylko tych testów, których ona dotyczy. Takie podejści pozwala skupić się na błędach powiązanych z obecną implementacją pomijając błędy wygenerowane przez jeszcze nie istniejące fragmenty kodu.
@@ -394,12 +462,12 @@ Oprócz omówionych powyżej funkcjonalności zarządzania wykonywaniem się tes
 Jako liczbę powtórzeń testów można przyjąć liczbę całkowitą większą od zera - wtedy test wykona się dokładnie tyle razy ile podano jako parametr flagi --gtest_repeat=N, lub podać wartość ujemną oznaczająco powtarzanie w nieskończoność. Opcja z powtarzaniem testów w nieskończoność jest przydatna w przypadku bardzo rzadkich losowych niepowodzeń w testach.
 Losowanie kolejności testów można osiągnąć na dwa sposoby. Pierwszy to zastosowanie flagi --gtest_shuffle na pliku uruchamiającym testy oraz zdefiniowanie GTEST_SHUFFLE jako jeden w kodzie programu (testy będą zawsze uruchamiane w losowej kolejności).
 
-Ustawienia formatu wyjściowego uruchomionych testów
+\chapter{Ustawienia formatu wyjściowego uruchomionych testów}
 
 Ustawienie formatu wejściwego jest opcją szczególnie przydatną w momencie kiedy testy będą uruchamiane na specjalnie do tego celu przygotowanych maszynach wyposażonych w środowiska testowe. W takim systemie pracy zebranie informacji o testach w postaci innej niż status wypisany w konsoli jest przydatny ze względu na łatwiejszą możliwość powiadamiania użytkowników tych maszyn co dokładnie było przyczyną niepowodzenia testów.
 Oba z frawmeworków - Boost unittest oraz Google test zapewniają eksport wyników testów do foramtu XML. Dodatkowo biblioteka Boost unittest oferuje możliwość włączenie generowania raportowanie do pliku XML z poziomu kodu testów. Atutem Google test jest możliwość dodania dodatkowych informacji do generowanego raportu XML przy pomocy funkcji 	RecordProperty przyjmującej jako pierwszy parametr nazwę własności do zapisania oraz drugi parametr jako dowolny typ danych, który posiada operato wypisania na strumień domyślny.
 
-Sposób prezentacji wyników testów
+\chapter{Sposób prezentacji wyników testów}
 
 Jedną z ważnych cech testów jednostkowych jest prezentacja wyników zarówno tych pozytywanych jak i negatywnych. Prezentacja powodów z jakich dany test został uznany za zakończony niepowodzeniem powinna być jednoznacza i dokładnie określać gdzie dany błąd wystąpił.
 W rozdziale "Formatowanie komunikatów o błędach" opisano luki w sposobie wypisywania wyników testów oraz sposoby jak je rozszerzyć.
@@ -464,7 +532,7 @@ D:\cmake_magisterka\gtest_custom_predicate_support\test\main.cpp(71): error: Exp
 
  1 FAILED TEST
 
-Punkty kontrolne
+\chapter{Punkty kontrolne}
 
 Punkt kontrolny pomaga w łatwy sposób przeanalizować przyczynę błędu poprzez wypisanie wiadomości z ostatniego napotkanego punktu kontrolnego. W przypadku biblioteki Boost unittest jest on realizowany za pomocą makra BOOST_TEST_CHECKPOINT (przykład poniżej).
 
@@ -474,7 +542,7 @@ Odpowiednikiem makra BOOST_TEST_CHECKPOINT w bibliotece Google test jest makro S
 
 TODO scoped trace
 
-Dodatkowe funkcje biblioteki Boost unittest
+\chapter{Dodatkowe funkcje biblioteki Boost unittest}
 
 Testowanie strumienia wyjściowego
 
@@ -495,7 +563,7 @@ Makro BOOST_TEST_MESSAGE pozwala wyświetlić dodatkową informację w czasie wy
 
 TODO test message
 
-Dodatkowe funkcje biblioteki Google test
+\chapter{Dodatkowe funkcje biblioteki Google test}
 
 Death tests - testy sprawdzające warunki kończące pracę aplikacji
 
@@ -528,3 +596,26 @@ Weryfikacja typów jest szczególnie potrzebna w sytuacjach kiedy użycie szablo
 Przykład weryfikacji typów został zamieszczony poniżej.
 
 TODO type assertion google
+
+	
+	
+	\begin{thebibliography}{1}
+	\addcontentsline{toc}{chapter}{Bibliografia}
+		
+	  \bibitem{md51} http://people.eku.edu/styere/Encrypt/JS-MD5.html
+
+	  \bibitem{MD52}  http://www.herongyang.com/Cryptography/MD5-Message-Digest-Algorithm-Overview.html
+
+	  \bibitem{SHA11} http://people.eku.edu/styere/Encrypt/JS-SHA1.html
+
+	  \bibitem{SHA11} http://www.herongyang.com/Cryptography/SHA1-Message-Digest-Algorithm-Overview.html
+
+
+	\bibitem{cuda1} http://www.nvidia.com/docs/IO/116711/sc11-cuda-c-basics.pdf
+	\bibitem{cuda3} http://research.ncl.ac.uk/game/mastersdegree/workshops/startingwithcuda/starting\char`_cuda.pdf
+	
+	\bibitem{inteli7} http://ark.intel.com/pl/products/43124/Intel-Core-i7-820QM-Processor-8M-Cache-1\char`_73-GHz
+	\bibitem{gtx} http://www.geforce.com/hardware/notebook-gpus/geforce-gtx-260m/specifications
+
+	 \end{thebibliography}
+\end{document}
