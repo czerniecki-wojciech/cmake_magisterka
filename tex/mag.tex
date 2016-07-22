@@ -54,7 +54,7 @@
 
 \begin{document}
 	%\maketitle
-	\includepdf[pages={1}]{pd_inz.pdf}
+	\includepdf[pages={1}]{pd_inz2.pdf}
 	
 	\newpage\thispagestyle{empty}
 	\mbox{}
@@ -183,7 +183,7 @@ Przykład przypadku testowego bibliotece Google test wygląda następująco:
 			\end{table} 
 		\end{center}
 
-\subsection{Grupowanie testów}
+\section{Grupowanie testów}
 
 W przypadku rozbudowanych programów posiadających setki testów powstaje potrzeba lepszego zarządzania nimi. Pierwszą z czynności, które przynoszą większe usystematyzowanie testów jest ich zgrupowanie. Dzięki takiemu zabiegowi łatwiej jest określić programiście, do której funkcjonalności przynależy dany TC.
 
@@ -234,11 +234,24 @@ Wynik porównania - czyli zwrócona wartość logiczna z wyrażenia a == b, inte
 Makro poziomu CHECK powoduję wyświetlenie wiadomości w momencie niepowodzenia, ale w odróżnieniu od makra REQUIRE pozwala kontynuować wykonywanie obecnego TC, ale TC zostaje uznany za zakończony z niepowodzeniem.
 Makro poziomu WARN służy wyłącznie do wypisania wiadomości o niepowodzeniu, TC nie jest uznany za zakończony niepowodzeniem - makra tego poziomu służą tylko w celu weryfikacji danych, która nie wpływa na ogólny wynik testów.
 
-W poniższym listingu kodu oprócz wspomnianych asercji korzystających z operatorów porównania możemy skorzystać z dodatkowych asercji: BOOST{\_}<LEVEL>, BOOST{\_}<LEVEL>{\_}BITEWISE{\_}EQUAL, BOOST{\_}<LEVEL>{\_}CLOSE, BOOST{\_}<LEVEL>{\_}CLOSE{\_}FRICTION, BOOST{\_}<LEVEL>{\_}EQUAL{\_}COLLECTIONS, BOOST{\_}<LEVEL>{\_}EXCEPTION, BOOST{\_}<LEVEL>{\_}MESSAGE, BOOST{\_}<LEVEL>{\_}NO{\_}THROW, BOOST{\_}<LEVEL>{\_}THROW, BOOST{\_}<LEVEL>{\_}PREDICATE, gdzie <LEVEL> może przyjmować jedną z trzech opcji: REQUIRE, CHECK lub WARN.
+W poniższym listingu kodu oprócz wspomnianych asercji korzystających z operatorów porównania możemy skorzystać z dodatkowych asercji: 
+\begin{itemize}
+\item BOOST{\_}<LEVEL>, 
+\item BOOST{\_}<LEVEL>{\_}BITEWISE{\_}EQUAL, 
+\item BOOST{\_}<LEVEL>{\_}CLOSE, 
+\item BOOST{\_}<LEVEL>{\_}CLOSE{\_}FRICTION, 
+\item BOOST{\_}<LEVEL>{\_}EQUAL{\_}COLLECTIONS, 
+\item BOOST{\_}<LEVEL>{\_}EXCEPTION, 
+\item BOOST{\_}<LEVEL>{\_}MESSAGE, 
+\item BOOST{\_}<LEVEL>{\_}NO{\_}THROW, 
+\item BOOST{\_}<LEVEL>{\_}THROW, 
+\item BOOST{\_}<LEVEL>{\_}PREDICATE, 
+	\end{itemize}
+gdzie <LEVEL> może przyjmować jedną z trzech opcji: REQUIRE, CHECK lub WARN.
 
 BOOST{\_}<LEVEL>(a) sprawdza czy wyrażenie w a jest prawdziwe czy też nie, jest to dość przydatne makro, ponieważ w miejsce a możemy wpisać dowolne wyrażenie, które będzie sprowadzone do wartości logicznej.
 
-Jednym z wyspecjalizowanych makr jest BOOST{\_}<LEVEL>{\_}BITEWISE{\_}EQUAL(a, b), jest on szczególnie przydatny dla programistów pracujących na przykład na zbiorze flag. W momencie stwierdzenia nierówności między a i b sprawdza on na których pozycjach występuję przekłamanie. Dzięki temu oszczędza to czasu dla programisty, który w szybki sposób może zweryfikować za co był odpowiedzialny dany bit.
+Jednym z wyspecjalizowanych makr dostępnych w bibliotece Boost unittest jest BOOST{\_}<LEVEL>{\_}BITEWISE{\_}EQUAL(a, b), jest on szczególnie przydatny dla programistów pracujących na przykład na zbiorze flag. W momencie stwierdzenia nierówności między a i b sprawdza on na których pozycjach występuję przekłamanie. Dzięki temu oszczędza to czasu dla programisty, który w szybki sposób może zweryfikować za co był odpowiedzialny dany bit.
 
 BOOST{\_}<LEVEL>{\_}EQUAL{\_}COLLECTION(ab, ae, bb, be) jest odpowiednikiem BOOST{\_}<LEVEL>{\_}EQUAL, który można wywołać na kolekcjach danych jak kontenery w języku C++11, które posiadają możliwość przeglądu elementów przy pomocy iteratorów albo na tablicach w stylu języka C. Parametry jakie przyjmuje to początek oraz koniec pierwszej kolekcji oraz początek i koniec drugiej kolekcji. Poprzez koniec kolekcji rozumiany jest wskaźnik na element tuż za ostatnim istniejącym elementem kolekcji.
 
@@ -255,10 +268,23 @@ Pozostałe z operatorów będą omówione w następnych rozdziałach tej pracy.
 
 Podobnie jak w bibliotece Boost unittest w przypadku biblioteki Google test mamy do dyspozycji szereg asercji opartych na operatorach porównania. W przypadku biblioteki Google test występują dwa poziomy priorytetów asercji - ASSERT oraz EXPECT. Pierwszy z nich odpowiada asercją REQUIRE, drugi asercją CHECK, czyli asercje poziomu ASSERT w momencie niepowodzenia zatrzymują dany TC oraz wypisują napotkany błąd, natomiast EXPECT powoduje tylko wypisanie przyczyny błędu.
 
-Dodatkowe asercje występujące w tej bibliotece to <LEVEL>{\_}STREQ, <LEVEL>{\_}STRNE, <LEVEL>{\_}STRCASEEQ, <LEVEL>{\_}STRCASENE, <LEVEL>{\_}THROW, <LEVEL>{\_}NO{\_}THROW, <LEVEL>{\_}ANY{\_}THROW, <LEVEL>{\_}FLOAT{\_}EQ, <LEVEL>{\_}DOUBLE{\_}EQ, <LEVEL>{\_}NEAR.
+Dodatkowe asercje występujące w tej bibliotece to: 
+	\begin{itemize}
+\item <LEVEL>{\_}STREQ, 
+\item <LEVEL>{\_}STRNE, 
+\item <LEVEL>{\_}STRCASEEQ, 
+\item <LEVEL>{\_}STRCASENE, 
+\item <LEVEL>{\_}THROW, 
+\item <LEVEL>{\_}NO{\_}THROW, 
+\item <LEVEL>{\_}ANY{\_}THROW, 
+\item <LEVEL>{\_}FLOAT{\_}EQ, 
+\item <LEVEL>{\_}DOUBLE{\_}EQ, 
+\item <LEVEL>{\_}NEAR.
+	\end{itemize}
 
 <LEVEL>{\_}STREQ oraz <LEVEL>{\_}STRNE służą do porównywania ciągów znakowych (z ang. string). Pierwszy z nich sprawdza czy podane ciągi są takie same, drugi natomiast sprawdza czy są one od siebie różne. Opisywane asercje przyjmują dwa parametry - ciąg sprawdzany oraz ciąg spodziewany, są one wrażliwe na wielkości liter w badanych ciągach. Jeśli wielkość liter na nie mieć znaczenia podczas wykonywania porównania należy skorzystać z operatorów 
-<LEVEL>{\_}STRCASEEQ, <LEVEL>{\_}STRCASENE. Podobnie jak <LEVEL>{\_}STREQ oraz <LEVEL>{\_}STRNE asercje <LEVEL>{\_}STRCASEEQ, <LEVEL>{\_}STRCASENE przyjmują dwa parametry.
+<LEVEL>{\_}STRCASEEQ, <LEVEL>{\_}STRCASENE. 
+Podobnie jak makra <LEVEL>{\_}STREQ oraz <LEVEL>{\_}STRNE asercje <LEVEL>{\_}STRCASEEQ, <LEVEL>{\_}STRCASENE przyjmują dwa parametry.
 
 W bibliotece Google test do dyspozycji mamy dodatkowe makra służące tylko do zaznaczania tego, że test zakończył się powodzeniem lub też nie - są to makra SUCCEED, FAIL, ADD{\_}FAILURE oraz ADD{\_}FAILURE{\_}AT. SUCCEED jest mało przydatnym makrem, ponieważ jest to odpowiednik ASSERT{\_}TRUE(true), a więc zawsze generuje pozytywny wynik. Ważne jest to, że makro SUCCEED nie powoduję, że cały TC jest oznaczany jako zakończony sukcesem.
 Makra FAIL, ADD{\_}FAILURE oraz ADD{\_}FAILURE{\_}AT są już bardziej przydatne ze względu na to, że wpływają na wynik TC. FAIL generuję fatalny błąd powodujący przerwanie przetwarzania obecnego testu natomiast ADD{\_}FAILURE oraz ADD{\_}FAILURE{\_}AT powodują zaraportowanie błędu, ale pozwalają na dokończenie przetwarzania obecnego TC.
@@ -269,7 +295,14 @@ FAIL, ADD{\_}FAILURE oraz ADD{\_}FAILURE{\_}AT przydają się w sytuacjach kiedy
 
 Jednym z przydatnych makr jest makro <LEVEL>{\_}NEAR(a, b, c). Przyjmuje ono trzy parametry - wartość sprawdzaną, wartość spodziewaną oraz odchylenie od wyniku. Makro sprawdza warunek b - c <= a <= b + c. Jest ono przydatne w momencie kiedy istnieje potrzeba czy wynik znajduję się w danym zakresie.
 
-Makra <LEVEL>{\_}THROW, <LEVEL>{\_}NO{\_}THROW, <LEVEL>{\_}ANY{\_}THROW, <LEVEL>{\_}FLOAT{\_}EQ oraz <LEVEL>{\_}DOUBLE{\_}EQ zostaną omówione w dalszej części pracy.
+W dalszej części pracy omówione zostaną makra: 
+	\begin{itemize}
+\item <LEVEL>{\_}THROW, 
+\item <LEVEL>{\_}NO{\_}THROW, 
+\item <LEVEL>{\_}ANY{\_}THROW, 
+\item <LEVEL>{\_}FLOAT{\_}EQ,
+\item <LEVEL>{\_}DOUBLE{\_}EQ.
+	\end{itemize}
 
 \lstset{language=C++, caption=Assercje wraz z dostępnymi poziomami w bibliotece Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_assert_levels/test/main.cpp}
@@ -403,7 +436,7 @@ W przypadku zastosowania fixtury globalnej nie możemy już operować na zmienny
 
 Tak jak to zostało napisane powyżej fixtury korzystają z konstruktora i destruktora struktury. Zależnie od typu zasięgu fixtury inicjalizacja i deinicjalizacja jej występuje w różnych momentach. W przypadku zasięgu ograniczonego do TC inicjalizacja jest wykonywana tuż przed TC i zaraz po TC. W przypadku jeśli więcej niż jeden TC korzysta z tej samej fixtury zmiany dokonane przez każdy z nich mają zasięg tylko do jego zakończenia - fixtury czyszczą się po każdym TC, więc każdy z nich działa niezależnie od innych i zawsze rozpoczyna pracę w czystym środowisku.
 
-Włączenie używania fixtury dla TC odbywa się przez makro BOOST{\_}FIXTURE{\_}TEST{\_}CASE przyjmujące jako parametry nazwę TC oraz nazwę struktury, której będziemy używać jako fixturę dla definiowanego TC.
+Makro BOOST{\_}FIXTURE{\_}TEST{\_}CASE odpowiedziale jest za włączenie uzywania fixtury, przyjmujące ono jako parametry nazwę TC oraz nazwę struktury, której będziemy używać jako fixturę dla definiowanego TC.
 
 \lstset{language=C++, caption=Przykład fixtury dla przypadku testowego w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_per_test_fixture/test/main.cpp}
@@ -412,7 +445,9 @@ Fixtury dla TS działają analogicznie jak fixtury dla TC, jedyną różnicą je
 Takie podejście wiąże się z tym, że zmiany dokonane na zmiennych należących do fixtury dla TS są widoczne dla TC wykonywanych po nim, z tego względu zaleca się stosowanie danych niemodyfikowalnych przez TC, ponieważ jest to sprzeczne z założeniem, że każdy test jednostkowy powinien być niezależny od innych testów jednostkowych.
 W przypadku kiedy TC modyfikują dane fixtury przygotowanej dla TS należy zastanowić się nad połączeniem scenariuszy poszczególnych TC w jeden, który będzie sprawdzał sekwencje działań, a fixture dla TS przekształcić w fixture dla TC.
 
-Aby skorzystać z fixtury dla TS należy użyć makra BOOST{\_}FIXTURE{\_}TEST{\_}SUITE, gdzie jako parametry należy podać nazwę TS oraz nazwę struktury, która będzie pełnić rolę fixtury. Do zamknięcia zasięgu tak zadeklarowanej TS stosujemy standardowe makro BOOST{\_}AUTO{\_}TEST{\_}SUITE{\_}END.
+Aby skorzystać z fixtury dla grupy testów (test suite) należy użyć osobnego makra BOOST{\_}FIXTURE{\_}TEST{\_}SUITE, gdzie jako parametry należy podać nazwę TS oraz nazwę struktury, która będzie pełnić rolę fixtury. 
+
+Makro BOOST{\_}AUTO{\_}TEST{\_}SUITE{\_}END stosujemy tak samo jak do zamknięcia zwykłej TS.
 
 \lstset{language=C++, caption=Przykład fixtury dla zbioru testów w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_per_suite_fixture/test/main.cpp}
@@ -566,7 +601,8 @@ Poniżej przykład zastosowania testów szablonowych w bibliotece Boost unittest
 
 Google test dostarcza dwa zestawy makr odpowiedzialnych za utworzenie testów szablonowych.
 Pierwszy zestaw składa się z makr: TYPED{\_}TEST{\_}CASE oraz TYPED{\_}TEST. Zestaw ten pozwala definiować testy szablonowe z już wcześniej zdefiniowanymi typami.
-Drugi zestaw: TYPED{\_}TEST{\_}CASE{\_}P, REGISTER{\_}TYPED{\_}TEST{\_}CASE{\_}P, INSTANTIATE{\_}TYPED{\_}TEST{\_}CASE{\_}P pozwala na zdefiniowanie ciała TC przed zadeklarowaniem typów, na których test będzie przeprowadzany.
+
+Drugi zestaw: TYPED{\_}TEST{\_}CASE{\_}P, REGISTER{\_}TYPED{\_}TEST{\_}CASE{\_}P oraz INSTANTIATE{\_}TYPED{\_}TEST{\_}CASE{\_}P pozwala na zdefiniowanie ciała TC przed zadeklarowaniem typów, na których test będzie przeprowadzany.
 
 Oba zestawienia makr potrzebują uprzednio zdefiniowanej klasy szablonowej dziedziczącej po ::testing::Test pełniącej rolę fixtury dla TCów oraz listy typów zapisanych przy pomocy ::testing::Types.
 
@@ -614,7 +650,9 @@ Twórcy bibliotek do testów jednostkowych przewidzieli powyższe sytuacje oraz 
 \subsection{Formatowanie komunikatów o błędach - bibliotek Boost unittest}
 
 Bibliotek Boost unittest dostarcza dwa podejścia do wcześniej wymienionych problemów.
-Pierwsze z nich rozwiązuje problem kiedy operator wypisania jest już wykorzystywany w inny niż spodziewany przez bibliotekę sposób. Makro BOOST{\_}TEST{\_}DONT{\_}PRINT{\_}LOG{\_}VALUE pozwala na wyłączenie wypisywania wartości porównywanych obiektów, czyli operator wypisania jest w tym momencie nieużywany i może pełnić inną funkcję.
+Pierwsze z nich rozwiązuje problem kiedy operator wypisania jest już wykorzystywany w inny niż spodziewany przez bibliotekę sposób. 
+
+Makro BOOST{\_}TEST{\_}DONT{\_}PRINT{\_}LOG{\_}VALUE pozwala na wyłączenie wypisywania wartości porównywanych obiektów, czyli operator wypisania jest w tym momencie nieużywany i może pełnić inną funkcję.
 
 \lstset{language=C++, caption=Wyłaczenie wypisywania konkretnego typu danych w biblitece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_dont_print_specific_value/test/main.cpp}
@@ -926,7 +964,7 @@ D:\cmake{\_}magisterka\gtest{\_}custom{\_}predicate{\_}support\test\main.cpp(71)
 
 \section{Punkty kontrolne}
 
-Punkt kontrolny pomaga w łatwy sposób przeanalizować przyczynę błędu poprzez wypisanie wiadomości z ostatniego napotkanego punktu kontrolnego. W przypadku biblioteki Boost unittest jest on realizowany za pomocą makra BOOST{\_}TEST{\_}CHECKPOINT (przykład poniżej).
+Punkt kontrolny pomaga w łatwy sposób przeanalizować przyczynę błędu poprzez wypisanie wiadomości z ostatniego napotkanego punktu kontrolnego. W przypadku biblioteki Boost unittest jest on realizowany za pomocą makra przyjującego łańcuch znaków do zapamiętania - BOOST{\_}TEST{\_}CHECKPOINT (przykład poniżej).
 
 \lstset{language=C++, caption=Punkt kontrolny w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_checkpoint/test/main.cpp}
@@ -1017,7 +1055,8 @@ Poniżej przykład użycia omówionych powyżej makr.
 \subsection{Testowanie kodu produkcyjnego}
 
 W testach jednostkowych zazwyczaj mamy dostęp tylko do elementów udostępnionych publicznie testowanych klas. W przypadku kiedy testowanie wartości z dostępem protected lub private jest wymagane w celu stwierdzenia poprawności działania algorytmu Google test dostarcza nagłówek gtest\\gtest{\_}prod.h, w którym zdefiniowane jest makro FRIEND{\_}TEST.
-Makro FRIEND{\_}TEST pozwala określić, który z testów ma mieć dostęp do zmiennych niewidocznych publicznie, poprzez określenie go poprzez podanie nazwy TS oraz nazwy TC.
+
+Makro FRIEND{\_}TEST pozwala określić, który z testów ma mieć dostęp do zmiennych niewidocznych publicznie, poprzez określenie go poprzez podanie nazwy TS oraz nazwy TC. Poniżej przykład testowania kodu prywatnego w bibliotece Google test.
 
 \lstset{language=C++, caption=Testowanie prywatnego kodu przy pomocy funkcji biblioteki Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_private_code/test/main.cpp}
@@ -1084,7 +1123,9 @@ Przykład weryfikacji typów został zamieszczony poniżej.
 
 	\begin{thebibliography}{1}
 	\addcontentsline{toc}{chapter}{Bibliografia}
-		\bibitem{IEEE754} http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber\=4610935\&filter\=AND(p{\_}Publication{\_}Number:4610933)
+		\bibitem{IEEE754} http://ieeexplore.ieee.org/xpl/
+		
+		articleDetails.jsp?arnumber\=4610935\&filter=AND(p{\_}Publication{\_}Number:4610933)
 		\bibitem{CMake} https://cmake.org/
 		\bibitem{DLL} https://en.wikipedia.org/wiki/Dynamic-link{\_}library
 	  	\bibitem{Primer} https://github.com/google/googletest/blob/master/googletest/docs/Primer.md
@@ -1092,6 +1133,5 @@ Przykład weryfikacji typów został zamieszczony poniżej.
 	  	\bibitem{Boost} http://www.boost.org/doc/libs/1{\_}46{\_}0/libs/test/doc/html/utf.html
 	  	\bibitem{devstyle} http://devstyle.pl/2011/08/11/ut-1-co-to-sa-testy-i-po-co-sa-testy-jednostkowe/
 
-	  	\bibitem{md51} http://people.eku.edu/styere/Encrypt/JS-MD5.html
 	 \end{thebibliography}
 \end{document}
