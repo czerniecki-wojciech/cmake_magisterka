@@ -808,7 +808,7 @@ W testach jednostkowych zazwyczaj mamy dostęp tylko do elementów udostępniony
 
 Makro FRIEND{\_}TEST pozwala określić, który z testów ma mieć dostęp do zmiennych niewidocznych publicznie, poprzez określenie go poprzez podanie nazwy TS oraz nazwy TC.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Testowanie prywatnego kodu przy pomocy funkcji biblioteki Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_private_code/test/main.cpp}
 
 \section{Używanie asercji poza kodem przypadku testowego}
@@ -817,7 +817,7 @@ W przypadku Boost unittest nie ma możliwości wywoływania asercji w innym miej
 
 <LEVEL>{\_}NO{\_}FATAL{\_}FAILURE pozwala na wywołanie funkcji z poziomu zasięgu TC, która będzie posiadała w sobie makro asercji. Dzięki takiemu zabiegowi można przygotować dedykowane funkcje do testowania właściwości klasy, które będą wspólne dla wielu TC i będą mogły być wywołane w każdym miejscu TC. Poniżej przykład użycia makra <LEVEL>{\_}NO{\_}FATAL{\_}FAILURE.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Użycie asercji poza ciałem funkcji, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_subroutine_asserts/test/main.cpp}
 
 \section{Asercje zależne od typów}
@@ -828,15 +828,19 @@ Weryfikacja typów jest szczególnie potrzebna w sytuacjach kiedy użycie szablo
 
 Przykład weryfikacji typów został zamieszczony poniżej.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Weryfikacja typów danych w bibliotece Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_type_assertions/test/main.cpp}
 
 	
 	
 	\begin{thebibliography}{1}
 	\addcontentsline{toc}{chapter}{Bibliografia}
-		
-	  
+		IEEE754 http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=4610935&filter=AND(p_Publication_Number:4610933)
+		CMake https://cmake.org/
+		DLL https://en.wikipedia.org/wiki/Dynamic-link_library
+	  	Primer https://github.com/google/googletest/blob/master/googletest/docs/Primer.md
+	  	Advanced https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md
+	  	Boost http://www.boost.org/doc/libs/1_46_0/libs/test/doc/html/utf.html
 
 	 \end{thebibliography}
 \end{document}
