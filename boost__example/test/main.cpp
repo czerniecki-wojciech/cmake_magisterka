@@ -5,6 +5,6 @@
 
 BOOST_AUTO_TEST_CASE(TC1)
 {
-	
+	//tutaj cialo testu
 }
 
