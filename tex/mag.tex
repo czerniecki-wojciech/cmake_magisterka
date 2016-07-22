@@ -145,7 +145,39 @@ W czasie realizacji badań zostały przygotowane 37 testów (21 testów z biblio
 
 Badania zostały przeprowadzone na bibliotekach skompilowanych do plików bibliotek ładowanych dynamicznie (DLL TODO[X]). Testy zostały napisane, skompilowane oraz uruchomione w środowisku Microsoft Windows 7 przy użyciu środowiska Microsoft Visual Studio C++ w wersji Community 2015 wraz z dostarczonym z nim kompilatorem w wersji.
 
+\chapter{Kryteria oceny}
 
+Kryteria oceniania będą się skupiać na ocenie przejrzystości kodu w stosunku do testowanej funkcjonalności,
+
+\section{Przejrzystość kodu}
+
+Przejrzystość kodu - przejrzystość kodu wpływa na czytelność oraz szybkość zrozumienia intencji autora testu, dlatego testowana biblioteka powinna zawierać metody ułatwiające jego czytanie, które będą możliwie zwięzłe.
+
+\subsection{Sposób oceny}
+Przejrzystość kodu będzie oceniana w skali 0-2, gdzie zero oznacza, że kod napisany z użyciem danej biblioteki jest słabo zrozumiały lub jest dłuższy od samego testu, 1 - kod jest przejrzysty, ale wymaga wielu dodatkowych operacji, 2 - kod jest przejrzysty i zwięzły.
+
+\section{Dostępna funkcjonalność}
+
+Dostępość więcej niż jednego sposobu rozwiązującego dany problem napotkany przy pisaniu testów jednostkowych pozwala programiście na dokonanie wyboru, w jaki sposób go rozwiąże. Dodatkowo obecność dodatkowego rozwiązania wiąże się z innymi możliwościami każdego z nich.
+
+\subsection{Sposób oceny}
+Dostępna funkcjonalność będzie oceniana bazując na porówaniu dwóch badanych bibliotek. Framework zawierający więcej możliwości radzenia sobie z problemem otrzyma 2 punkty, jeśli druga z badanych bibliotek będzie posiadała także rozwiązanie danego problemu otrzyma ona 1 punkt, natomiast jeśli nie posiada odpowiednika prezentowanych funkcji otrzyma 0 punktów.
+
+W sytuacjach kiedy nie jest możliwe rozstrzygnięcie, która biblioteka posiada bogatszy wachlarz możliwości obie z nich otrzymają po 1 punkcie.
+
+\section{Poziom trudności}
+
+Badane funkcjonalności zostaną ocenione pod względem poziomu trudności w stosunku do osiągnięcia danego wyniku. Pozwoli to ocenić czy biblioteka nadaję się dla początkujących programistów.
+
+\subsection{Sposób oceny}
+Poziom trudności kodu odpowiedzialnego za realizacje danej funkcjonalności będzie odzwierciedlała skala: 2 - łatwy, 1 - przeciętnie trudny, 0 - trudny do napisania.
+
+\section{Przydatność}
+
+Pomimo wielu opcji dostepnej w każdej z bibliotek należy określić, które z nich są przydatne z punktu widzenia użytkownika końcowego.
+
+\subsection{Sposób oceny}
+Ocena będzie opierać się na analize częstości występowania problemu podczas pracy z kodem bazując na doświadczeniach zdobytych przez autora podczas pracy zawodowej.
 
 \chapter{Definicja Testu w badanych bibliotekach.}
 
@@ -157,14 +189,15 @@ Dodatkowym aspektem, który przemawia za użyciem makr jest łatwość rejestrac
 
 \section{Definicja przypadku testowego w bibliotece Boost unittest}
 
-TODO opis makra
+Do zdefiniowania przypadku testowego w bibliotece Boost służy makro BOOST{\_}AUTO{\_}TEST{\_}CASE. Przyjmuje ono jako parametr nazwę przypadku testowego. Następnie w nawiasach klamrowych definiuje się ciało testu.
+
+Boost unittest pozwala na definiowanie testów bez przypisywania ich do grup testów (z ang. test suite).
 
 Automatyczna generacja wraz z rejestracją przypadku testowego w bibliotece Boost unittest wygląda następująco:
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Definicja przypadku testowego w bibliotece Boost wraz z automatyczną jego rejestracją, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost__example/test/main.cpp}
 
-Boost test pozwala na definiowanie testów bez przypisywania ich do grup testów (z ang. test suite). Do automatycznego wygenerowania TC służy makro BOOST{\_}AUTO{\_}TEST{\_}CASE(nazwa){}
 
 \section{Definicja przypadku testowego w bibliotece Google Test}
 
@@ -786,20 +819,7 @@ Przykład weryfikacji typów został zamieszczony poniżej.
 	\begin{thebibliography}{1}
 	\addcontentsline{toc}{chapter}{Bibliografia}
 		
-	  \bibitem{md51} http://people.eku.edu/styere/Encrypt/JS-MD5.html
-
-	  \bibitem{MD52}  http://www.herongyang.com/Cryptography/MD5-Message-Digest-Algorithm-Overview.html
-
-	  \bibitem{SHA11} http://people.eku.edu/styere/Encrypt/JS-SHA1.html
-
-	  \bibitem{SHA11} http://www.herongyang.com/Cryptography/SHA1-Message-Digest-Algorithm-Overview.html
-
-
-	\bibitem{cuda1} http://www.nvidia.com/docs/IO/116711/sc11-cuda-c-basics.pdf
-	\bibitem{cuda3} http://research.ncl.ac.uk/game/mastersdegree/workshops/startingwithcuda/starting\char`_cuda.pdf
-	
-	\bibitem{inteli7} http://ark.intel.com/pl/products/43124/Intel-Core-i7-820QM-Processor-8M-Cache-1\char`_73-GHz
-	\bibitem{gtx} http://www.geforce.com/hardware/notebook-gpus/geforce-gtx-260m/specifications
+	  
 
 	 \end{thebibliography}
 \end{document}
