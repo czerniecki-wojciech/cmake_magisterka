@@ -1,17 +1,14 @@
-
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE example
 
 #include <boost/test/unit_test.hpp>
-#include <boost/test/output_test_stream.hpp> 
-
 #include <vector>
 #include <algorithm>
 
-#include "..\src\PrintingComponent.h"
-
+//definicja grupy testow
 BOOST_AUTO_TEST_SUITE(OutputStreamTest)
 
+//funkcja pomocnicza to wypisywania zawartosci wektora
 template <typename T>
 void printVectorToPredicateResult(std::vector<T>& v, boost::test_tools::predicate_result& pr)
 {
@@ -31,14 +28,14 @@ void printVectorToPredicateResult(std::vector<T>& v, boost::test_tools::predicat
 template <typename T>
 boost::test_tools::predicate_result compareVectors(std::vector<T>& v1, std::vector<T>& v2)
 {
-	if (v1.size() != v2.size()) {
-		boost::test_tools::predicate_result res(false);
+	if (v1.size() != v2.size()) { //sprawdzenie dlugosci wektorów
+		boost::test_tools::predicate_result res(false); //definicja obiektu przechowujacego komunikat o powodzie uznania testu za zakonczony niepowodzeniem
 
 		res.message() << "Vectors have different size: " << v1.size() << " != " << v2.size();
 
 		return res;
 	}
-
+	//sprawdzenie czy zawartosc wektorow jest taka sama
 	if (!std::equal(v1.begin(), v1.end(), v2.begin(), v2.end()))
 	{
 		boost::test_tools::predicate_result res(false);
@@ -55,16 +52,18 @@ boost::test_tools::predicate_result compareVectors(std::vector<T>& v1, std::vect
 	return true;
 }
 
+//definicja testu
 BOOST_AUTO_TEST_CASE(OutputStreamTest)
 {
-	
+	//przykladowe dane
 	std::vector<int> v1{ 1, 2, 3, 4 };
 	std::vector<int> v2{ 2, 2, 3, 4 };
 	std::vector<int> v3{ 1, 2, 3};
-
+	//porownywanie wektorow
 	BOOST_CHECK(compareVectors(v1, v1));
 	BOOST_CHECK(compareVectors(v1, v2));
 	BOOST_CHECK(compareVectors(v1, v3));
 }
 
+//koniec definicji grupy testów
 BOOST_AUTO_TEST_SUITE_END()

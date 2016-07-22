@@ -1,9 +1,7 @@
-
 #include "gtest/gtest.h"
-
 #include "../src/simple_calc.h"
 
-
+//definicja fixtury
 class SimpleCalcTest : public ::testing::Test
 {
 protected:
@@ -17,12 +15,11 @@ protected:
 
 	simple_calc sc;
 };
-
+//definicja testu wykorzystujacego fixture
 TEST_F(SimpleCalcTest, PrivateMemberTest) {
 	sc.addInts(1, 1);
-	ASSERT_EQ(sc.lastSum, 2);
+	ASSERT_EQ(sc.lastSum, 2); //testowanie zmiennej prywatnej klasy sc
 }
-
 
 int main(int argc, char* argv[])
 {

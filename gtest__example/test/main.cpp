@@ -1,8 +1,4 @@
-// example000_google.cpp : Defines the entry point for the console application.
-//
-
 #include "gtest/gtest.h"
-
 #include "../src/simple_calc.h"
 
 TEST(CalcTests, OnePlusTwoShouldBeEqualThree) {

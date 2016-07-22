@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 
+//definicje klas posiadajacych metode wypisujaca wartosc zmiennej logicznej przechowywanej w klasie
 class MyFirstClass
 {
 public:
@@ -36,8 +37,7 @@ public:
 	}
 };
 
-
-//custom printers for assertions
+//definicja operator wypisania na strumien werjsciowy dla zdefiniowanych klas
 
 std::ostream& operator<<(std::ostream& os, const MyFirstClass& mfc)
 {
@@ -58,25 +58,13 @@ void PrintTo(const MyThirdClass& mtc, std::ostream* os)
 {
 	*os << "PrintTo " + mtc.createStringRepresentation();
 }
-
-struct my_exception
-{
-	explicit my_exception(int ec = 0) : my_error_code(ec) {}
-
-	int my_error_code;
-};
-
-int divideThreeBy(int a) {
-	if (a == 0)
-		throw my_exception(-1);
-	return 3 / a;
-}
-
+//definicja testu
 TEST(AssertLevelTest, NonFatal) {
+	//obiekty wczesniej zdefiniowanych klas
 	MyFirstClass first;
 	MySecondClass second;
 	MyThirdClass third;
-
+	//wywolanie operatora wypisania w momencie niepowodzenia porownania
 	EXPECT_EQ(first.a, true) << ::testing::PrintToString(first);
 	EXPECT_EQ(second.b, true) << ::testing::PrintToString(second);
 	EXPECT_EQ(third.c, true) << ::testing::PrintToString(third);
