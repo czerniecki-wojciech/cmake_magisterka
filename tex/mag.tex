@@ -203,13 +203,13 @@ Automatyczna generacja wraz z rejestracją przypadku testowego w bibliotece Boos
 
 Podobnie jak w przypadku biblioteki omawianej powyżej rejestracja TC w bibliotece realizowana jest przy pomocy prostego makra. 
 
-TODO opis makra
+Do zdefiniowania przypadku testowego w bibliotece Google test służy makro TEST, przyjmujące jako paramtry nazwę zbioru testów, do którego test będzie przypisany oraz nazwę samego testu. Następnie w nawiasach klamrowych definiuje się ciało testu.
 
 Dodatkowo w poniższym przykładzie zobrazowany został sposób odpalenia wszystkich testów z funkcji wejściowej programu - funkcji main. Z tego sposobu uruchamiania testów można zrezygnować w sytuacji kiedy zamiast linkować program z wcześniej wygenerowaną biblioteką dynamiczną gtest.dll zlinkujemy program z biblioteką statyczną gtest{\_}main.lib.
 
 Przykład przypadku testowego bibliotece Google test wygląda następująco:
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Definicja przypadku testowego w bibliotece Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_test_case/test/main.cpp}
 
 \chapter{Grupowanie testów}
@@ -225,8 +225,6 @@ Biblioteka Google test wymaga, aby każdy test case przynależał to TS, dlatego
 Dodatkowym atutem biblioteki Boost unittest jest fakt, że TS można grupować w kolejne poziomy grupy testów - inaczej mówić test suite może zawierać inny test suite, zawieranie nie jest ograniczone do jednego poziomu oraz można zawierać wiele TS w jednej TS.
 
 Poniżej przykłady zastosowania grupowania testów w badanych bibliotekach.
-
-TODO rozpisać
 
 \chapter{Podstawowe metody weryfikacji - asercje}
 
@@ -262,7 +260,7 @@ BOOST{\_}<LEVEL>{\_}PREDICATE(pred, (a)(b)) pozwala na zawołanie funkcji - pred
 
 Pozostałe z operatorów będą omówione w następnych rozdziałach tej pracy.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Assercje wraz z dostępnymi poziomami w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_assert_levels/test/main.cpp}
 
 \section{Podstawowe metody weryfikacji - asercje w bibliotece Google test}
@@ -293,7 +291,7 @@ Jednym z przydatnych makr jest makro <LEVEL>{\_}NEAR(a, b, c). Przyjmuje ono trz
 
 Makra <LEVEL>{\_}THROW, <LEVEL>{\_}NO{\_}THROW, <LEVEL>{\_}ANY{\_}THROW, <LEVEL>{\_}FLOAT{\_}EQ oraz <LEVEL>{\_}DOUBLE{\_}EQ zostaną omówione w dalszej części pracy.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Assercje wraz z dostępnymi poziomami w bibliotece Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_assert_levels/test/main.cpp}
 
 \chapter{Porównywanie liczb zmiennoprzecinkowych}
@@ -312,15 +310,15 @@ TODO wzór
 
 Drugie z makr - BOOST{\_}<LEVEL>{\_}CLOSE{\_}FRACTION sprawdza czy różnica między pierwszym a drugim parametrem jest co najwyżej równa trzeciemu z nich.
 
-Przykłady użycia obu makr znajdują się w rozdziale poświęconym asercją TODO dodać numer rozdziału.
+Przykłady użycia obu makr znajdują się w rozdziale poświęconym asercją (patrz rozdział 7).
 
 \section{Porównywanie liczb zmiennoprzecinkowych - biblioteka Google test}
 
 W bibliotece Google test znajdziemy dwie asercje - jedną dla liczb pojedynczej precyzji (float) oraz dla liczb podwójnej precyzji (double).
 
-Oba z tych makr - <LEVEL>{\_}FLOAT{\_}EQ oraz <LEVEL>{\_}DOUBLE{\_}EQ porównują liczby z pominięciem ich niedokładności. W rozdziale poświęconym asercją (TODO numer rozdziału asercje) widzimy, że liczba 100.0f jest w swojej reprezentacji równa 100.00001f. W przypadku liczb podwójnej precyzji błąd znajduje się na dalszym miejscu po przecinku niż w przypadku liczb pojedynczej precyzji.
+Oba z tych makr - <LEVEL>{\_}FLOAT{\_}EQ oraz <LEVEL>{\_}DOUBLE{\_}EQ porównują liczby z pominięciem ich niedokładności. W rozdziale poświęconym asercją (patrz rozdział 7) widzimy, że liczba 100.0f jest w swojej reprezentacji równa 100.00001f. W przypadku liczb podwójnej precyzji błąd znajduje się na dalszym miejscu po przecinku niż w przypadku liczb pojedynczej precyzji.
 
-Przykłady użycia obu makr znajdują się w rozdziale poświęconym asercją (TODO numer rozdziału asercje).
+Przykłady użycia obu makr znajdują się w rozdziale poświęconym asercją (patrz rozdział 7).
 
 \chapter{Obsługa wyjątków}
 
@@ -328,13 +326,24 @@ Niektóre programy swoją logikę opierają na obsłudze wyjątków. Takie podej
 
 \section{Obsługa wyjątków - biblioteka Boost unittest}
 
-W przypadku biblioteki Boost unittest jej twórcy zapewnili dwa makra służące do sprawdzenie czy wyjątek został rzucony czy też nie. Są to odpowiednio makra BOOST{\_}<LEVEL>{\_}THROW oraz BOOST{\_}<LEVEL>{\_}NO{\_}THROW. Pierwsze z nich służy do dwóch rzeczy - sprawdzenie czy wyjątek został rzucony oraz czy wyjątek jest spodziewanym wyjątkiem. BOOST{\_}<LEVEL>{\_}THROW przyjmuje dwa argumenty - pierwszy z nich to kod powodujący rzucenie wyjątku, a drugi to struktura wyjątku, którego się spodziewamy. 
+W przypadku biblioteki Boost unittest jej twórcy zapewnili trzy makra służące do sprawdzenie czy wyjątek został rzucony czy też nie. Są to odpowiednio makra BOOST{\_}<LEVEL>{\_}THROW, BOOST{\_}<LEVEL>{\_}NO{\_}THROW oraz BOOST{\_}<LEVEL>{\_}EXCEPTION. Pierwsze z nich służy do dwóch rzeczy - sprawdzenie czy wyjątek został rzucony oraz czy wyjątek jest spodziewanym wyjątkiem. BOOST{\_}<LEVEL>{\_}THROW przyjmuje dwa argumenty - pierwszy z nich to kod powodujący rzucenie wyjątku, a drugi to struktura wyjątku, którego się spodziewamy. 
 
 Drugie z makr BOOST{\_}<LEVEL>{\_}NO{\_}THROW przyjmuje tylko kod, który nie powinien rzucić żadnego wyjątku, w przeciwnym wypadku asercja nie będzie spełniona, TC ją zawierający będzie uznany za zakończony niepowodzeniem.
 
-Przykłady użycia obu makr znajdują się w rozdziale poświęconym asercją (TODO numer rozdziału asercje).
+Trzecie z makr BOOST{\_}<LEVEL>{\_}EXCEPTION pozwala przy pomocy funkcji porównującej podanej jako trzeci argument stwierdzić czy dodatkowe pola rzuconego wyjątku są zgodne z oczekiwanymi. Pozostałe dwa parametry sa zgodne z wcześniej omawianym makresm.
 
-TODO brakuje gtest
+Przykłady użycia powyższych makr znajdują się w rozdziale poświęconym asercją (patrz rozdział 7).
+
+\section{Obsługa wyjątków - biblioteka Google test}
+Biblioteka Google test zapewnia trzy makra do weryfikacja czy dany fragment kodu rzuca wyjątkiem czy też nie.
+
+Do sprawdzenia czy wyjątek nie został rzucony służy makro <LEVEL>{\_}NO{\_}THROW.
+
+W sytuacjach kiedy oczekujemy rzucena jakiegokolwiek wyjątku należy skorzystać z <LEVEL>{\_}ANY{\_}THROW. Oba z omówionych makr przyjmują fragment kodu jako pierwszy argument weryfikując status rzucenia wyjątku spowodowany jego wykonaniem.
+
+Do porównania czy rzucony został wyjątek danego typu służy makro <LEVEL>{\_}THROW, któe oprócz kodu przyjmuję jeszcze nazwę struktury wyjątku.
+
+Przykłady użycia powyższych makr znajdują się w rozdziale poświęconym asercją (patrz rozdział 7). 
 
 \chapter{Sposoby przygotowania środowiska przed rozpoczęciem testu}
 
@@ -356,7 +365,7 @@ Tak jak to zostało napisane powyżej fixtury korzystają z konstruktora i destr
 
 Włączenie używania fixtury dla TC odbywa się przez makro BOOST{\_}FIXTURE{\_}TEST{\_}CASE przyjmujące jako parametry nazwę TC oraz nazwę struktury, której będziemy używać jako fixturę dla definiowanego TC.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Przykład fixtury dla przypadku testowego w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_per_test_fixture/test/main.cpp}
 
 Fixtury dla TS działają analogicznie jak fixtury dla TC, jedyną różnicą jest moment inicjalizacji i deinicjalizacji zmiennych, która nie jest robiona przed i po każdym TC, ale przed pierwszym TC należącym do TS oraz po ostatnim TC należącym do TS.
@@ -367,7 +376,7 @@ W przypadku kiedy TC modyfikują dane fixtury przygotowanej dla TS należy zasta
 
 Aby skorzystać z fixtury dla TS należy użyć makra BOOST{\_}FIXTURE{\_}TEST{\_}SUITE, gdzie jako parametry należy podać nazwę TS oraz nazwę struktury, która będzie pełnić rolę fixtury. Do zamknięcia zasięgu tak zadeklarowanej TS stosujemy standardowe makro BOOST{\_}AUTO{\_}TEST{\_}SUITE{\_}END.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Przykład fixtury dla zbioru testów w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_per_suite_fixture/test/main.cpp}
 
 Fixtury globalne w przeciwieństwie do omawianych fixtur dla TC oraz TS nie powinny operować ba zmiennych wewnętrznych tworzącej ich struktury - powinny korzystać ze zmiennych globalnych, które będą dostępne dla każdego TC.
@@ -380,7 +389,7 @@ Podobnie jak we wcześniejszym wypadku - jeśli występuje konieczność modyfik
 
 Inicjalizacja struktury jako fixtury globalnej odbywa się poprzez użycie makra BOOST{\_}GLOBAL{\_}FIXTURE jako parametr podając nazwę klasy fixtury.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Przykład globalnej fixtury w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_global_fixture/test/main.cpp}
 
 \section{Sposoby przygotowania środowiska przed rozpoczęciem testu - biblioteka Google test}
@@ -397,7 +406,7 @@ W bibliotece Google test występują dwa rodzaje fixtur - dla TC oraz globalna.
 
 W przypadku fixtury dla TC potrzebne jest klasa dziedzicząca publicznie po klasie ::testing::Test. Do stworzenia TC z użyciem fixtury odpowiada makro TEST{\_}F przyjmujące nazwę klasy fixtury oraz nazwę TC. Inicjalizacja i deinicjalizacja mają miejsce przed i po każdym TC, dzięki temu każdy TC korzysta z tego samego środowiska startowego - nie ma możliwości wpływania na kolejne TC.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Przykład fixtury dla zbioru testów w bibliotece Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_fixture/test/main.cpp}
 
 Klasa fixtury globalnej dziedziczy publicznie po klasie ::testing::Environment. W przeciwieństwie do fixtury dla TC rejestracja fixtury globalnej musi odbyć się przed uruchomieniem wszystkich testów metodą RUN{\_}ALL{\_}TESTS.
@@ -408,7 +417,7 @@ Wspomniany otrzymany wskaźnik jest punktem dostępowym do globalnej fixtury - n
 
 Podobnie jak w przypadku Boost unittest inicjalizacja odbywa się przed uruchomieniem inicjalizacji pierwszego TC, a deinicjalizacja odbywa się po zakończeniu wszystkich TC.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Przykład globalnej fixtury w bibliotece Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_global_fixture/test/main.cpp}
 
 \chapter{Testy parametryzowane}
@@ -439,7 +448,7 @@ W przypadku testów parametryzowanych z użyciem biblioteki ładowanej dynamiczn
 
 Poniżej przykład stworzenia testów parametryzowanych z użyciem biblioteki Boost unittest załadowanej dynamicznie.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Test parametryzowany w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_param_test_case/test/main.cpp}
 
 \section{Testy parametryzowane - bibliotek Google test}
@@ -452,7 +461,7 @@ Zestaw danych można zdefiniować przy pomocy generatorów parametrów: Range, V
 
 Poniżej przykład zastosowania generatora Values w testach parametryzowanych.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Test parametryzowany w bibliotece Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_value_parameterized_tests/test/main.cpp}
 
 \chapter{Testy z użyciem szablonów}
@@ -469,7 +478,7 @@ Typy do przetestowania należy wpisać do specjalnie przygotowanej listy typów 
 
 Poniżej przykład zastosowania testów szablonowych w bibliotece Boost unittest.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Test szablonowy w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_template_test_case_with_automatic_registration/test/main.cpp}
 
 \section{Testy z użyciem szablonów - biblioteka Google test}
@@ -488,7 +497,7 @@ Do odwołania się do testowanego typu służy słowo kluczowe TypeParam.
 
 Poniżej przykład omówionej poniżej definicji testu szablonowego ze znanymi na początku typami.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Test szablonowy w bibliotece Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_typed_tests/test/main.cpp}
 
 W przypdaku kiedy chcemy zdefiniować ciała TCów wcześniej niż zdefiniowanie typów, które będziemy testować należy zadeklarować, że fixtura będzie używana w testach szablonowych przy pomocy TYPED{\_}TEST{\_}CASE{\_}P, następnie korzystając z TYPED{\_}TEST{\_}P zdefiniować ciało TC (parametry: nazwa fixtury oraz nazwa TC). Tak przygotowany TC należy następnie zarejestrować - REGISTER{\_}TYPED{\_}TEST{\_}CASE{\_}P z nazwą fixtury oraz nazwą TC.
@@ -499,7 +508,7 @@ Tak jak we wcześniejszym przypadku klasa fixtury jest klasą szablonową dziedz
 
 Poniżej przykład definicji testu szablonowego z przesuniętą deklaracją testowanych typów.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Test szablonowy w bibliotece Google test - definiowanie testu bez wcześniejszej znajomości typów danych, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_typed_tests2/test/main.cpp}
 
 \chapter{Formatowanie komunikatów o błędach}
@@ -522,7 +531,7 @@ Bibliotek Boost unittest dostarcza dwa podejścia do wcześniej wymienionych pro
 
 Pierwsze z nich rozwiązuje problem kiedy operator wypisania jest już wykorzystywany w inny niż spodziewany przez bibliotekę sposób. Makro BOOST{\_}TEST{\_}DONT{\_}PRINT{\_}LOG{\_}VALUE pozwala na wyłączenie wypisywania wartości porównywanych obiektów, czyli operator wypisania jest w tym momencie nieużywany i może pełnić inną funkcję.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Wyłaczenie wypisywania konkretnego typu danych w biblitece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_dont_print_specific_value/test/main.cpp}
 
 Drugie podejście pozwala na wypisanie wartości obiektu jeśli operator wypisania nie jest zdefiniowany i z jakiegoś powodu nie powinien być dostępny dla porównywanych obiektów.
@@ -537,7 +546,7 @@ Zdefiniowany predykat należy podać do wcześniej wspomnianego makra BOOST{\_}<
 
 Poniżej prezentacja kodu realizującego powyższą funkcjonalność (w założeniu, że tym T posiada operator porównania oraz wypisania).
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Definiowanie własnego sposobu wypisywania wyników porównania poprzez zastosowanie własnego predykatu. Przykład dla biblioteki Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_custom_predicate_support/test/main.cpp}
 
 \section{Formatowanie komunikatów o błędach - bibliotek Google test}
@@ -548,7 +557,7 @@ Zdefiniowany predykat jest tożsamy ideologicznie z odpowiednikiem omawianym wcz
 
 Predykat można stosować z odpowiednikiem BOOST{\_}<LEVEL> - makrem <LEVEL>{\_}TRUE lub zastosować dedykowane makro EXPECT{\_}PRED{\_}FORMAT<X> (X określa ilość parametrów podawanych w predykacie), które jako parametry przyjmuję referencję predykatu oraz porównywane wartości.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Definiowanie własnego sposobu wypisywania wyników porównania poprzez zastosowanie własnego predykatu. Przykład dla biblioteki Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_custom_predicate_support/test/main.cpp}
 
 W przypadku jeśli operator wypisania dla porównywanych obiektów nie istnieje korzystając z biblioteki Google test trzeba go zdefiniować - biblioteka nie posiada opcji wyłącznie wypisywania wartości porównywanych obiektów. Obejściem tego problemu jest zdefiniowanie predykatu, który zwróci informacje tylko o tym, że porównanie zakończyło się wynikiem negatywnym.
@@ -557,7 +566,7 @@ Wśród możliwości biblioteki znajdziemy natomiast możliwość dołączenia d
 
 Poniżej przykład dodawania dodatkowej informacji do komunikatu o błędzie.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Definicja niestandardowego sposobu wypisywania danych podczas porównań w bibliotece Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_custom_output_on_assert_failure/test/main.cpp}
 
 \chapter{Sterowanie wykonywaniem testów}
@@ -580,7 +589,7 @@ Pozostałe opcje to ustawienie statusu na * boost::unit{\_}test::enable{\_}if<co
 
 Poniżej przykład zaczerpnięty z dokumentacji biblioteki Boost unittest demonstrujący selektywne uruchamianie TC zależnie od wyniku wcześniejszych TC.
 
-\lstset{language=C++, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Selektywne uruchamianie TC zależnie od wyniku wcześniejszych TC w biblitece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 		\begin{lstlisting}[label=some-code,caption=Listing programu rysującego model jajka w 3D]
 #define BOOST{\_}TEST{\_}MODULE decorator{\_}08
 #include <boost/test/included/unit{\_}test.hpp>
@@ -664,16 +673,24 @@ Jedną z ważnych cech testów jednostkowych jest prezentacja wyników zarówno 
 
 W rozdziale "Formatowanie komunikatów o błędach" opisano luki w sposobie wypisywania wyników testów oraz sposoby jak je rozszerzyć.
 
-Biblioteka Boost unittest w domyślnej konfiguracji nie wyświetla żadnych informacji w sytuacji kiedy testy kończą się powodzeniem, natomiast w przypadku błędu wyświetla komunikat zbliżony do informacji kompilatora w momencie znalezienia błędu w kodzie.
+Biblioteka Boost unittest w domyślnej konfiguracji nie wyświetla żadnych detali odnośnie testów w sytuacji kiedy testy kończą się powodzeniem, natomiast w przypadku błędu wyświetla komunikat zbliżony do informacji kompilatora w momencie znalezienia błędu w kodzie.
+
+Przykładowy komunikat o testach zakończonych pozytywnie znajduję się poniżej.
+\begin{lstlisting}[label=some-code,caption=Przykłądowy pozytywny wynik testu w bibliotece Boost unittest]
+Running 4 test cases...
+
+*** No errors detected
+		\end{lstlisting}
 
 Przykład komunikatu o błędzie w bibliotece Boost unittest znajduje się poniżej.
-
+\begin{lstlisting}[label=some-code,caption=Przykłądowy negatywny wynik testu w bibliotece Boost unittest]
 test.cpp(14): error: in "suite1/test2": check 2 != 2 has failed [2 == 2]
+		\end{lstlisting}
 
 Biblioteka Google test w domyślnej konfiguracji wyświetla informację o każdym teście dzięki czemu można na bieżąco śledzić postęp ich wykonywania. Niestety w przypadku napotkania więcej niż jednego błędu z powodu dużej ilości danych tak prezentowany wynik staje się mało czytelny. Przykład z testów zakończonych powodzeniem oraz testów, w których wykryto błędy znajduje się poniżej.
 
 \lstset{language=C++, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
-		\begin{lstlisting}[label=some-code,caption=Listing programu rysującego model jajka w 3D]
+		\begin{lstlisting}[label=some-code,caption=Przykłądowy pozytywny wynik testu w bibliotece Google test]
 [==========] Running 4 tests from 2 test cases.
 [----------] Global test environment set-up.
 [----------] 2 tests from TestCase1
@@ -696,7 +713,7 @@ Biblioteka Google test w domyślnej konfiguracji wyświetla informację o każdy
 		\end{lstlisting}
 
 \lstset{language=C++, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
-		\begin{lstlisting}[label=some-code,caption=Listing programu rysującego model jajka w 3D]
+		\begin{lstlisting}[label=some-code,caption=Przykłądowy negatywny wynik testu w bibliotece Google test]
 [==========] Running 1 test from 1 test case.
 [----------] Global test environment set-up.
 [----------] 1 test from TestCase1
@@ -735,12 +752,12 @@ D:\cmake{\_}magisterka\gtest{\_}custom{\_}predicate{\_}support\test\main.cpp(71)
 
 Punkt kontrolny pomaga w łatwy sposób przeanalizować przyczynę błędu poprzez wypisanie wiadomości z ostatniego napotkanego punktu kontrolnego. W przypadku biblioteki Boost unittest jest on realizowany za pomocą makra BOOST{\_}TEST{\_}CHECKPOINT (przykład poniżej).
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Punkt kontrolny w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_checkpoint/test/main.cpp}
 
 Odpowiednikiem makra BOOST{\_}TEST{\_}CHECKPOINT w bibliotece Google test jest makro SCOPED{\_}TRACE, którego zasada działania jest taka sama jak odpowiednika z biblioteki Boost.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Punkt kontrolny w bibliotece Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_scoped_trace_tests/test/main.cpp}
 
 \chapter{Dodatkowe funkcje biblioteki Boost unittest}
@@ -751,21 +768,21 @@ Klasa boost::test{\_}tools::output{\_}test{\_}stream zapewnia możliwość testo
 
 Przykład testu klasy PrintingComponent znajduje się poniżej.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Testowanie strumienia wyjściowego w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_output_test_stream/test/main.cpp}
 
 \section{Spodziewane niepowodzenia w przypadkach testowych}
 
 Boost unittest zapewnia możliwość określenia niepowodzeń w ramach pojedynczego TC, które nie będą powodować uznania jego całego za zakończony niepowodzeniem. Do tego celu służy makro BOOST{\_}AUTO{\_}TEST{\_}CASE{\_}EXPECTED{\_}FAILURES przyjmujące dwa parametry nazwę TC oraz maksymalną ilość niespełnionych asercji (przykład poniżej).
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Definiowanie maksymalnej liczby asercji zakończonych niepowodzeniem w obrębie jednego przypadku testwego w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_test_case_expected_failures/test/main.cpp}
 
 \section{Wyświetlanie dodatkowych wiadomości podczas wykonywania testów.}
 
 Makro BOOST{\_}TEST{\_}MESSAGE pozwala wyświetlić dodatkową informację w czasie wykonywania testów. To rozwiązanie jest przydatne w momencie kiedy programista nie ma możliwości zdebagowania kodu, a potrzebna jest mu wiedza na temat wartości zmiennej lub chce sprawdzić czy dany fragment kodu został osiągnięty.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Wyświetlanie dodatkowych wiadomości podczas wykonywania testu w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_test_message/test/main.cpp}
 
 \chapter{Dodatkowe funkcje biblioteki Google test}
@@ -782,7 +799,7 @@ Makro <LEVEL>{\_}EXIT oprócz sprawdzania wiadomości na strumieniu std::cerr sp
 
 Poniżej przykład użycia omówionych powyżej makr.
 
-\lstset{language=C++, caption="TODO", captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
+\lstset{language=C++, caption=Przykład testów typu death test w bibliotece Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_death_tests/test/main.cpp}
 
 \section{Testowanie kodu produkcyjnego}
