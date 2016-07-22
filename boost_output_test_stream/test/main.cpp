@@ -24,5 +24,5 @@ BOOST_AUTO_TEST_CASE(OutputStreamTest)
 	BOOST_CHECK(testStream.is_equal(a));
 }
 
-//koniec definicji grupy testów
+//koniec definicji grupy testow
 BOOST_AUTO_TEST_SUITE_END()

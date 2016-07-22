@@ -81,7 +81,7 @@ Kolejne rozdziały będą omawiać funkcje charakterystyczne dla każdej z badan
 
 Ostatnie rozdziały tej pracy to ocena badanych bibliotek względem przyjętych kryteriów oceny oraz podsumowanie wraz z możliwościami rozwoju danej pracy.
 
-\chapter{Przyjęty sposób prowadzenia badań}
+\section{Przyjęty sposób prowadzenia badań}
 
 Podczas realizacji badań przyjęto kilka założeń, które oprócz usystematyzowania prac starają się uczynić wyniki jak najbardziej czytelne. Projekt został stworzony przy pomocy systemu budowania CMake \cite{cmake}.
 
@@ -96,7 +96,7 @@ W swoich badaniach przyjąłem założenie o nie uzupełnianiu pozyskanej z doku
 W czasie realizacji badań zostały przygotowane 37 testów (21 testów z biblioteki Boost oraz 16 testów z biblioteki Google), które bazowały na wiedzy pozyskanej ze studiowanej dokumentacji.
 Badania zostały przeprowadzone na bibliotekach skompilowanych do plików bibliotek ładowanych dynamicznie \cite{DLL}. Testy zostały napisane, skompilowane oraz uruchomione w środowisku Microsoft Windows 7 przy użyciu środowiska Microsoft Visual Studio C++ w wersji Community 2015 wraz z dostarczonym z nim kompilatorem w wersji.
 
-\chapter{Kryteria oceny}
+\section{Kryteria oceny}
 
 Kryteria oceniania będą się skupiać na ocenie przejrzystości kodu w stosunku do testowanej funkcjonalności,
 
@@ -130,14 +130,14 @@ Pomimo wielu opcji dostepnej w każdej z bibliotek należy określić, które z 
 \subsection{Sposób oceny}
 Ocena będzie opierać się na analize częstości występowania problemu podczas pracy z kodem bazując na doświadczeniach zdobytych przez autora podczas pracy zawodowej. Przyjęte wartości ocent to 0-2 punktów.
 
-\chapter{Definiowanie testu w badanych bibliotekach.}
+\section{Definiowanie testu w badanych bibliotekach.}
 
 Obie biblioteki do definicji podstawowej jednostki w testach jednostkowych - przypadku testowego (z ang. test case, dalej TC) oferują podobne rozwiązania. Jednocześnie w obu przypadkach zalecane jest użycie makr w języku C++ do zdefiniowania TCu, co znacznie uławia pisanie testów oraz zwiększa produktywność podczas testowania całych modułów.
 Dodatkowym aspektem, który przemawia za użyciem makr jest łatwość rejestracji testów w "test runnerze", który odpowiada za uruchomienie testów.
 
 
 
-\section{Definiowanie testu w bibliotece Boost unittest}
+\subsection{Definiowanie testu w bibliotece Boost unittest}
 
 Do zdefiniowania przypadku testowego w bibliotece Boost służy makro BOOST{\_}AUTO{\_}TEST{\_}CASE. Przyjmuje ono jako parametr nazwę przypadku testowego. Następnie w nawiasach klamrowych definiuje się ciało testu. Boost unittest pozwala na definiowanie testów bez przypisywania ich do grup testów (z ang. test suite).
 
@@ -159,7 +159,7 @@ Automatyczna generacja wraz z rejestracją przypadku testowego w bibliotece Boos
 		\end{center}
 
 
-\section{Definiowanie testu w bibliotece Google Test}
+\subsection{Definiowanie testu w bibliotece Google Test}
 
 Podobnie jak w przypadku biblioteki omawianej powyżej rejestracja TC w bibliotece realizowana jest przy pomocy prostego makra. 
 Do zdefiniowania przypadku testowego w bibliotece Google test służy makro TEST, przyjmujące jako paramtry nazwę zbioru testów, do którego test będzie przypisany oraz nazwę samego testu. Następnie w nawiasach klamrowych definiuje się ciało testu.
@@ -183,7 +183,7 @@ Przykład przypadku testowego bibliotece Google test wygląda następująco:
 			\end{table} 
 		\end{center}
 
-\chapter{Grupowanie testów}
+\subsection{Grupowanie testów}
 
 W przypadku rozbudowanych programów posiadających setki testów powstaje potrzeba lepszego zarządzania nimi. Pierwszą z czynności, które przynoszą większe usystematyzowanie testów jest ich zgrupowanie. Dzięki takiemu zabiegowi łatwiej jest określić programiście, do której funkcjonalności przynależy dany TC.
 
@@ -219,12 +219,12 @@ Poniżej przykłady zastosowania grupowania testów w badanych bibliotekach.
 			\end{table} 
 		\end{center}
 
-\chapter{Podstawowe metody weryfikacji - asercje}
+\subsection{Podstawowe metody weryfikacji - asercje}
 
 Podstawowym narzędziem służącym do weryfikacji poprawności działania programów w testach są asercje, czyli porównania między spodziewaną wartością działania algorytmu a wartością otrzymaną w trakcie działania programu.
 Wartości możemy porównywać na różne sposobu - nie tylko sprawdzając ich równość co do wartości spodziewanej ale również pokazując zależność między wartością spodziewaną a otrzymaną. W przypadku obu bibliotek do porównywania wartości wykorzystywane są makra.
 
-\section{Podstawowe metody weryfikacji - asercje w bibliotece Boost unittest}
+\subsubsection{Podstawowe metody weryfikacji - asercje w bibliotece Boost unittest}
 
 Biblioteka Boost unittest oferuje szereg asercji, które pozwalają porównywać wartości przy pomocy operatorów takich jak <=, >=, ==, <, >, !=. Oprócz tego biblioteka oferuję trzy poziomy określające priorytet asercji: WARN, CHECK oraz REQUIRE. Dla każdego z tych poziomów istnieje ten sam zestaw asercji, na przykład porównanie co do równości z wartością oczekiwaną występuje w trzech formach BOOST{\_}WARN{\_}EQUAL(a, b), BOOST{\_}CHACK{\_}EQUAL(a, b) oraz BOOST{\_}REQUIRE{\_}EQUAL(a, b).
 
@@ -251,7 +251,7 @@ Pozostałe z operatorów będą omówione w następnych rozdziałach tej pracy.
 \lstset{language=C++, caption=Assercje wraz z dostępnymi poziomami w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_assert_levels/test/main.cpp}
 
-\section{Podstawowe metody weryfikacji - asercje w bibliotece Google test}
+\subsection{Podstawowe metody weryfikacji - asercje w bibliotece Google test}
 
 Podobnie jak w bibliotece Boost unittest w przypadku biblioteki Google test mamy do dyspozycji szereg asercji opartych na operatorach porównania. W przypadku biblioteki Google test występują dwa poziomy priorytetów asercji - ASSERT oraz EXPECT. Pierwszy z nich odpowiada asercją REQUIRE, drugi asercją CHECK, czyli asercje poziomu ASSERT w momencie niepowodzenia zatrzymują dany TC oraz wypisują napotkany błąd, natomiast EXPECT powoduje tylko wypisanie przyczyny błędu.
 
@@ -298,12 +298,12 @@ Makra <LEVEL>{\_}THROW, <LEVEL>{\_}NO{\_}THROW, <LEVEL>{\_}ANY{\_}THROW, <LEVEL>
 			\end{table} 
 		\end{center}
 
-\chapter{Porównywanie liczb zmiennoprzecinkowych}
+\section{Porównywanie liczb zmiennoprzecinkowych}
 
 Liczby zmiennoprzecinkowe są reprezentowane w pamięci komputera z pewną skończoną dokładnością, która zależy od wielkości reprezentacji liczby \cite{IEEE754}. Występowanie tej niedokładności wiąże się z tym, że liczby zmiennoprzecinkowe mogą się różnić podczas porównywania - przykładowo liczba typu double (podwójnej precyzji) 1.0 dzielone przez 5.0 jest różna od 0.2.
 Do porównywania liczb uwzględniając ich niedokładność wymagane są odpowiednie metody.
 
-\section{Porównywanie liczb zmiennoprzecinkowych - biblioteka Boost unittest}
+\subsection{Porównywanie liczb zmiennoprzecinkowych - biblioteka Boost unittest}
 
 Korzystając z biblioteki Boost unittest mamy do dyspozycji dwie asercje - BOOST{\_}<LEVEL>{\_}CLOSE oraz BOOST{\_}<LEVEL>{\_}CLOSE{\_}FRACTION. Do ich użycia potrzebne jest wczytanie nagłówka boost/test/floating{\_}point{\_}comparison.hpp.
 Pierwsza z nich sprawdza czy liczba podana jako pierwszy parametr jest różna od drugiej o co najwyżej procent podany jako trzeci z parametrów.
@@ -323,7 +323,7 @@ Przykłady użycia obu makr znajdują się w rozdziale poświęconym asercją (p
 			\end{table} 
 		\end{center}
 
-\section{Porównywanie liczb zmiennoprzecinkowych - biblioteka Google test}
+\subsection{Porównywanie liczb zmiennoprzecinkowych - biblioteka Google test}
 
 W bibliotece Google test znajdziemy dwie asercje - jedną dla liczb pojedynczej precyzji (float) oraz dla liczb podwójnej precyzji (double).
 
@@ -343,11 +343,11 @@ Przykłady użycia obu makr znajdują się w rozdziale poświęconym asercją (p
 			\end{table} 
 		\end{center}
 
-\chapter{Obsługa wyjątków}
+\section{Obsługa wyjątków}
 
 Niektóre programy swoją logikę opierają na obsłudze wyjątków. Takie podejście zmusza twórców bibliotek testowych do zapewnienia odpowiednich narzędzi także do weryfikacji programów opierających swoją logikę na takim sposobie działania. 
 
-\section{Obsługa wyjątków - biblioteka Boost unittest}
+\subsection{Obsługa wyjątków - biblioteka Boost unittest}
 
 W przypadku biblioteki Boost unittest jej twórcy zapewnili trzy makra służące do sprawdzenie czy wyjątek został rzucony czy też nie. Są to odpowiednio makra BOOST{\_}<LEVEL>{\_}THROW, BOOST{\_}<LEVEL>{\_}NO{\_}THROW oraz BOOST{\_}<LEVEL>{\_}EXCEPTION. Pierwsze z nich służy do dwóch rzeczy - sprawdzenie czy wyjątek został rzucony oraz czy wyjątek jest spodziewanym wyjątkiem. BOOST{\_}<LEVEL>{\_}THROW przyjmuje dwa argumenty - pierwszy z nich to kod powodujący rzucenie wyjątku, a drugi to struktura wyjątku, którego się spodziewamy. 
 Drugie z makr BOOST{\_}<LEVEL>{\_}NO{\_}THROW przyjmuje tylko kod, który nie powinien rzucić żadnego wyjątku, w przeciwnym wypadku asercja nie będzie spełniona, TC ją zawierający będzie uznany za zakończony niepowodzeniem.
@@ -368,7 +368,7 @@ Przykłady użycia powyższych makr znajdują się w rozdziale poświęconym ase
 			\end{table} 
 		\end{center}
 
-\section{Obsługa wyjątków - biblioteka Google test}
+\subsection{Obsługa wyjątków - biblioteka Google test}
 Biblioteka Google test zapewnia trzy makra do weryfikacja czy dany fragment kodu rzuca wyjątkiem czy też nie.
 Do sprawdzenia czy wyjątek nie został rzucony służy makro <LEVEL>{\_}NO{\_}THROW.
 W sytuacjach kiedy oczekujemy rzucena jakiegokolwiek wyjątku należy skorzystać z <LEVEL>{\_}ANY{\_}THROW. Oba z omówionych makr przyjmują fragment kodu jako pierwszy argument weryfikując status rzucenia wyjątku spowodowany jego wykonaniem.
@@ -388,7 +388,7 @@ Przykłady użycia powyższych makr znajdują się w rozdziale poświęconym ase
 			\end{table} 
 		\end{center}
 
-\chapter{Sposoby przygotowania środowiska przed rozpoczęciem testu}
+\section{Sposoby przygotowania środowiska przed rozpoczęciem testu}
 
 Podczas pisania testów jednostkowych niekiedy, aby przetestować jedną funkcjonalność potrzebujemy uruchomić cały moduł. Operacja ta zależy od stopnia skomplikowania modułu, ale z punktu widzenia osoby piszącej testy wymaga napisania dodatkowego kodu. Dodatkowy kod powoduje, że intencja testu staje się niejasna. 
 Stosowanym rozwiązaniem jest przeniesienie inicjalizacji modułu do osobnej funkcji i wolanie jej w każdym TC. Takie podejście poprawia czytelność kodu - zamiast całej inicjalizacji wywołujemy funkcje, która za to odpowiada. Wadą takiego rozwiązania jest to, że programista musi pamiętać o tym, aby daną funkcję wywołać.
@@ -396,7 +396,7 @@ Preferowanym rozwiązaniem powyższego problemu jest zrzucenie odpowiedzialnośc
 
 Oba z badanych framweorków zapewniają powyższą funkcjonalność.
 
-\section{Sposoby przygotowania środowiska przed rozpoczęciem testu - biblioteka Boost unittest}
+\subsection{Sposoby przygotowania środowiska przed rozpoczęciem testu - biblioteka Boost unittest}
 
 Boost unittest zapewnia trzy rodzaje inicjalizacji fixtur - fixture dla TC, fixture dla TS oraz globalną fixture dla wszystkich testów. Fixtury w tej bibliotece oparte są na konstruktorach i destruktorach struktur (klas z dostępem publicznym) - w przypadku fixtur dla TC i TS wewnątrz konstruktora i destruktora operujemy na zmiennych wewnętrznych klasy, dostęp do tych zmiennych otrzymujemy w teście bezpośrednio bez odnoszenia się do struktury fixtury.
 W przypadku zastosowania fixtury globalnej nie możemy już operować na zmiennych wewnętrznych struktury, ponieważ zastosowany mechanizm w bibliotece nie udostępni nam dostępu do tych zmiennych. Z tego względu fixtury globalne powinny operować na zmiennych globalnych.
@@ -440,7 +440,7 @@ Inicjalizacja struktury jako fixtury globalnej odbywa się poprzez użycie makra
 			\end{table} 
 		\end{center}
 
-\section{Sposoby przygotowania środowiska przed rozpoczęciem testu - biblioteka Google test}
+\subsection{Sposoby przygotowania środowiska przed rozpoczęciem testu - biblioteka Google test}
 
 Biblioteka Google test w przeciwieństwie do wcześniej omawianej biblioteki Boost unittest nie korzysta z konstruktorów i destruktorów struktury pełniącej rolę fixtury na rzecz podejścia bardziej obiektowego.
 W Boost unittest fixtura była strukturą języka C - inaczej mówiąc klasą z dostępem publicznym do wszystkich swoich metod oraz zmiennych, w przypadku Google test jako fixtura wykorzystywana jest klasa dziedzicząca po klasie ::testing::Test lub ::testing::Environment.
@@ -474,7 +474,7 @@ Podobnie jak w przypadku Boost unittest inicjalizacja odbywa się przed uruchomi
 			\end{table} 
 		\end{center}
 
-\chapter{Testy parametryzowane}
+\section{Testy parametryzowane}
 
 Pisząc testy jednostkowe często spotyka się sytuacje, kiedy jedno zachowanie powinno być takie same dla paru zestawu danych wejściowych. W momencie kiedy zmuszeni jesteśmy przetestować stosunkowo niewielką ilość zestawów danych nie jest to kłopotliwe, natomiast w miarę rozrastania się ich ilości zaczyna to generować problemy, z którymi programista musi sobie poradzić.
 
@@ -487,7 +487,7 @@ Kolejną niedogodnością jest przeglądania zestawu danych wejściowych - zamia
 Rozwiązaniem powyższych problemów jest zastosowanie testów parametryzowanych, które będą uruchamiały jeden TC z różnymi parametrami wejściowymi. 
 Testy parametryzowane z pozoru można zastąpić standardową pętlą for, ale powoduję to, że w momencie niepowodzenie nie wiemy który z zestawów danych spowodował zakończenie testu niepowodzeniem, co z kolei w przypadku testów parametryzowanych jest dokładnie zaznaczone.
 
-\section{Testy parametryzowane - bibliotek Boost unittest}
+\subsection{Testy parametryzowane - bibliotek Boost unittest}
 
 Biblioteka Boost unittest dostarcza możliwość tworzenia testów parametryzowanych przy pomocy makra BOOST{\_}PARAM{\_}TEST{\_}CASE.
 Pierwszy z parametrów przyjmowanych przez wspomniane makro to wskaźnik do funkcji, która będzie pełniła rolę TC, a kolejne dwa parametry to wskaźnik na pierwszy zestaw danych oraz wskaźnik na zestaw za ostatnim istniejącym zestawem.
@@ -512,7 +512,7 @@ Poniżej przykład stworzenia testów parametryzowanych z użyciem biblioteki Bo
 			\end{table} 
 		\end{center}
 
-\section{Testy parametryzowane - bibliotek Google test}
+\subsection{Testy parametryzowane - bibliotek Google test}
 
 Google test zapewnia obsługę testów parametryzowanych przy użyciu dwóch wyspecjalizowanych makr - TEST{\_}P oraz INSTANTIATE{\_}TEST{\_}CASE{\_}P.
 Pierwszy z nich przyjmuje dwa parametry - nazwę pomocniczą służącą do rejestracji testu parametryzowanego, oraz nazwę TC. Drugie z makr jak już zostało to wspomniane służy do rejestracji testu  - przyjmuję trzy parametry, pierwszy - nazwa testu parametryzowanego, drugi - nazwa pomocnicza TC oraz ostatni, którym jest zestaw danych.
@@ -535,12 +535,12 @@ Poniżej przykład zastosowania generatora Values w testach parametryzowanych.
 			\end{table} 
 		\end{center}
 
-\chapter{Testy z użyciem szablonów}
+\section{Testy z użyciem szablonów}
 
 Obecne standardy korzystania z języka C++ wymagają znajomości szablonów oraz ich wykorzystania do generowania kodu dla różnych parametrów począwszy od zmiennych po całe klasy wyspecjalizowane. Aby przetestować tak wygenerowane fragmenty kodu należy zdefiniować testy dla każdej ze specjalizacji danej funkcjonalności.
 W przypadku kiedy testy dla różnych typów danych są identyczne w celu redukcji ilości kodu należy zastosować testy szablonowe.
 
-\section{Testy z użyciem szablonów - biblioteka Boost unittest}
+\subsection{Testy z użyciem szablonów - biblioteka Boost unittest}
 
 Moduł unittest z biblioteki BOOST dostarcza bardzo pomocne makro, które pomoże zredukować ilość kodu dla metod oraz klas opartych na szablonach. Makro BOOST{\_}AUTO{\_}TEST{\_}CASE{\_}TEMPLATE przyjmujące trzy parametry(nazwę testu, nazwę, przez którą można się odnieść do typu, dla którego test jest wykonywany oraz listy typów) definiuje TC, który będzie wykonywany dla każdego z typów, które programista będzie potrzebował przetestować.
 Typy do przetestowania należy wpisać do specjalnie przygotowanej listy typów również pochodzącej z biblioteki Boost - boost::mpl::list. Tak zdefiniowane typy możemy przekazać do już wspomnianego makra redukując tym samym ilość kodu czyniąc go bardziej przejrzystym i łatwiejszym w refaktoringu.
@@ -562,7 +562,7 @@ Poniżej przykład zastosowania testów szablonowych w bibliotece Boost unittest
 			\end{table} 
 		\end{center}
 
-\section{Testy z użyciem szablonów - biblioteka Google test}
+\subsection{Testy z użyciem szablonów - biblioteka Google test}
 
 Google test dostarcza dwa zestawy makr odpowiedzialnych za utworzenie testów szablonowych.
 Pierwszy zestaw składa się z makr: TYPED{\_}TEST{\_}CASE oraz TYPED{\_}TEST. Zestaw ten pozwala definiować testy szablonowe z już wcześniej zdefiniowanymi typami.
@@ -600,7 +600,7 @@ Poniżej przykład definicji testu szablonowego z przesuniętą deklaracją test
 			\end{table} 
 		\end{center}
 
-\chapter{Formatowanie komunikatów o błędach}
+\section{Formatowanie komunikatów o błędach}
 
 Asercje porównujące dwie wartości przy pomocy operatorów porównania wymagają, aby porównywane wartości mogły być wypisywane przez domyślny strumień wyjściowy (korzystając z operatora operator<<(std::ostream\&, ArgumentType const\&)). 
 Nie każdy z porównywanych typów posiada zdefiniowany taki operator, nawet w momencie kiedy porównywanie przy pomocy operatora == jest możliwe. Można taki operator na potrzeby testu zdefiniować, jednak takie podejście może spotkać z paroma problemami.
@@ -611,7 +611,7 @@ Jeśli operator wypisania jest już zdefiniowany, ale pełni inną funkcję, otr
 
 Twórcy bibliotek do testów jednostkowych przewidzieli powyższe sytuacje oraz przygotowali rozwiązania powyższych problemów.
 
-\section{Formatowanie komunikatów o błędach - bibliotek Boost unittest}
+\subsection{Formatowanie komunikatów o błędach - bibliotek Boost unittest}
 
 Bibliotek Boost unittest dostarcza dwa podejścia do wcześniej wymienionych problemów.
 Pierwsze z nich rozwiązuje problem kiedy operator wypisania jest już wykorzystywany w inny niż spodziewany przez bibliotekę sposób. Makro BOOST{\_}TEST{\_}DONT{\_}PRINT{\_}LOG{\_}VALUE pozwala na wyłączenie wypisywania wartości porównywanych obiektów, czyli operator wypisania jest w tym momencie nieużywany i może pełnić inną funkcję.
@@ -643,7 +643,7 @@ Poniżej prezentacja kodu realizującego powyższą funkcjonalność (w założe
 			\end{table} 
 		\end{center}
 
-\section{Formatowanie komunikatów o błędach - bibliotek Google test}
+\subsection{Formatowanie komunikatów o błędach - bibliotek Google test}
 
 Google test podobnie jak Boost test pozwala na stworzenie predykatu do porównywania złożonych typów w niestandardowy sposób. W badaniach dla porównania napisano taki sam predykat jak w przypadku poprzednio omawianej biblioteki, choć nie był on wymagany (Google test radzi sobie z wypisywaniem obiektów std::vector).
 
@@ -674,14 +674,14 @@ Poniżej przykład dodawania dodatkowej informacji do komunikatu o błędzie.
 			\end{table} 
 		\end{center}
 
-\chapter{Sterowanie wykonywaniem testów}
+\section{Sterowanie wykonywaniem testów}
 
 W idealnym świecie programistów każdy kod powinien być pisany wg metodologii Test Driven Development - czyli testy do kodu powinny powstać przed implementacją bazując na zdefiniowanych interfejsach.
 Jeśli programista lub zespół programistyczny pracujący w TDD implementuje swoją funkcjonalność dużym udogodnieniem jest uruchamianie tylko tych testów, których ona dotyczy. Takie podejście pozwala skupić się na błędach powiązanych z obecną implementacją pomijając błędy wygenerowane przez jeszcze nie istniejące fragmenty kodu.
 
 Istnieją dwa rozwiązania, które mogą spełnić powyższe wymagania. Pierwsze z nich to wyłącznie testów powiązanych z nieistniejącym kodem, drugie natomiast zakłada uruchomienie tylko tych testów, które są z punktu widzenia użytkowników ważne.
 
-\section{Sterowanie wykonywaniem testów - biblioteka Boost unittest}
+\subsection{Sterowanie wykonywaniem testów - biblioteka Boost unittest}
 
 Biblioteka posiada wiele metod sterowania wykonywaniem testów począwszy od wyłączania pojedynczych TC w kodzie przez wyłączenie całych TS, uruchamianie TC oraz TS zależnie od wartości zmiennych statycznych, wybieranie testów do uruchomienia z poziomu linii poleceń aż poprzez zarządzanie wykonaniem testu zależnie od statusu poprzednich testów.
 Makra BOOST{\_}AUTO{\_}TEST{\_}CASE oraz BOOST{\_}AUTO{\_}TEST{\_}SUITE przyjmują jako drugi z parametrów status aktywności.
@@ -758,7 +758,7 @@ Dodatkową opcją, dzięki której można wybrać testy do uruchomienia jest sko
 			\end{table} 
 		\end{center}
 
-\section{Sterowanie wykonywaniem testów - biblioteka Google test}
+\subsection{Sterowanie wykonywaniem testów - biblioteka Google test}
 
 Bibliotek do testów jednostkowych od Google zawiera podobny mechanizm do uruchamiania testów z poziomu wiersza poleceń jak odpowiednik Boost unittest.
 Przy pomocy flagi --gtest{\_}list{\_}tests można podejrzeć całe drzewo testów, a stosując flagę --gtest{\_}filter=X można wybrać, które z testów uruchomić. Podobnie jak poprzednik biblioteka jako X przyjmuje wyrażenia regularne.
@@ -787,7 +787,7 @@ Losowanie kolejności testów można osiągnąć na dwa sposoby. Pierwszy to zas
 			\end{table} 
 		\end{center}
 
-\chapter{Ustawienia formatu wyjściowego uruchomionych testów}
+\section{Ustawienia formatu wyjściowego uruchomionych testów}
 
 Ustawienie formatu wejściowego jest opcją szczególnie przydatną w momencie kiedy testy będą uruchamiane na specjalnie do tego celu przygotowanych maszynach wyposażonych w środowiska testowe. W takim systemie pracy zebranie informacji o testach w postaci innej niż status wypisany w konsoli jest przydatny ze względu na łatwiejszą możliwość powiadamiania użytkowników tych maszyn co dokładnie było przyczyną niepowodzenia testów.
 
@@ -819,7 +819,7 @@ Oba z frawmeworków - Boost unittest oraz Google test zapewniają eksport wynik�
 		\end{center}
 
 
-\chapter{Sposób prezentacji wyników testów}
+\section{Sposób prezentacji wyników testów}
 
 Jedną z ważnych cech testów jednostkowych jest prezentacja wyników zarówno tych pozytywnych jak i negatywnych. Prezentacja powodów z jakich dany test został uznany za zakończony niepowodzeniem powinna być jednoznaczna i dokładnie określać gdzie dany błąd wystąpił.
 W rozdziale "Formatowanie komunikatów o błędach" opisano luki w sposobie wypisywania wyników testów oraz sposoby jak je rozszerzyć.
@@ -924,7 +924,7 @@ D:\cmake{\_}magisterka\gtest{\_}custom{\_}predicate{\_}support\test\main.cpp(71)
 			\end{table} 
 		\end{center}
 
-\chapter{Punkty kontrolne}
+\section{Punkty kontrolne}
 
 Punkt kontrolny pomaga w łatwy sposób przeanalizować przyczynę błędu poprzez wypisanie wiadomości z ostatniego napotkanego punktu kontrolnego. W przypadku biblioteki Boost unittest jest on realizowany za pomocą makra BOOST{\_}TEST{\_}CHECKPOINT (przykład poniżej).
 
@@ -961,9 +961,9 @@ Odpowiednikiem makra BOOST{\_}TEST{\_}CHECKPOINT w bibliotece Google test jest m
 			\end{table} 
 		\end{center}
 
-\chapter{Dodatkowe funkcje biblioteki Boost unittest}
+\section{Dodatkowe funkcje biblioteki Boost unittest}
 
-\section{Testowanie strumienia wyjściowego}
+\subsection{Testowanie strumienia wyjściowego}
 
 Klasa boost::test{\_}tools::output{\_}test{\_}stream zapewnia możliwość testowania wyjścia aplikacjia na strumień wejściowy (domyślny, pliku lub inny). Dzięki takiej możliwości istnieje możliwość zweryfikowania poprawności informacji wyświetlanych użytkownikowi lub sprawdzenie czy poprawne dane zostały zapisane do pliku bez konieczności jego tworzeni, a następnie wczytywania w celu analizy zapisanych danych.
 
@@ -972,14 +972,14 @@ Przykład testu klasy PrintingComponent znajduje się poniżej.
 \lstset{language=C++, caption=Testowanie strumienia wyjściowego w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_output_test_stream/test/main.cpp}
 
-\section{Spodziewane niepowodzenia w przypadkach testowych}
+\subsection{Spodziewane niepowodzenia w przypadkach testowych}
 
 Boost unittest zapewnia możliwość określenia niepowodzeń w ramach pojedynczego TC, które nie będą powodować uznania jego całego za zakończony niepowodzeniem. Do tego celu służy makro BOOST{\_}AUTO{\_}TEST{\_}CASE{\_}EXPECTED{\_}FAILURES przyjmujące dwa parametry nazwę TC oraz maksymalną ilość niespełnionych asercji (przykład poniżej).
 
 \lstset{language=C++, caption=Definiowanie maksymalnej liczby asercji zakończonych niepowodzeniem w obrębie jednego przypadku testwego w bibliotece Boost unittest, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../boost_test_case_expected_failures/test/main.cpp}
 
-\section{Wyświetlanie dodatkowych wiadomości podczas wykonywania testów.}
+\subsection{Wyświetlanie dodatkowych wiadomości podczas wykonywania testów.}
 
 Makro BOOST{\_}TEST{\_}MESSAGE pozwala wyświetlić dodatkową informację w czasie wykonywania testów. To rozwiązanie jest przydatne w momencie kiedy programista nie ma możliwości zdebagowania kodu, a potrzebna jest mu wiedza na temat wartości zmiennej lub chce sprawdzić czy dany fragment kodu został osiągnięty.
 
@@ -999,9 +999,9 @@ Makro BOOST{\_}TEST{\_}MESSAGE pozwala wyświetlić dodatkową informację w cza
 			\end{table} 
 		\end{center}
 
-\chapter{Dodatkowe funkcje biblioteki Google test}
+\section{Dodatkowe funkcje biblioteki Google test}
 
-\section{Death tests - testy sprawdzające warunki kończące pracę aplikacji}
+\subsection{Death tests - testy sprawdzające warunki kończące pracę aplikacji}
 
 Niektóre scenariusze działania aplikacji wymagają, aby poprawnie obsłużyć operację powodującą nagłe zakończenie jej pracy. W takich sytuacjach ważne jest sprawdzenie czy powód, przez który skończyła się jej praca jest wyświetlony dla użytkownika w celu przykładowo korekcji danych wejściowych lub wskazania lokalizacji pliki dziennika zawierającego scenariusz realizowany przed zakończeniem pracy aplikacji.
 Do tego celu przeznaczona zestaw makr <LEVEL>{\_}DEATH, <LEVEL>{\_}DEATH{\_}IF{\_}SUPPORTED oraz <LEVEL>{\_}EXIT. 
@@ -1014,7 +1014,7 @@ Poniżej przykład użycia omówionych powyżej makr.
 \lstset{language=C++, caption=Przykład testów typu death test w bibliotece Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_death_tests/test/main.cpp}
 
-\section{Testowanie kodu produkcyjnego}
+\subsection{Testowanie kodu produkcyjnego}
 
 W testach jednostkowych zazwyczaj mamy dostęp tylko do elementów udostępnionych publicznie testowanych klas. W przypadku kiedy testowanie wartości z dostępem protected lub private jest wymagane w celu stwierdzenia poprawności działania algorytmu Google test dostarcza nagłówek gtest\\gtest{\_}prod.h, w którym zdefiniowane jest makro FRIEND{\_}TEST.
 Makro FRIEND{\_}TEST pozwala określić, który z testów ma mieć dostęp do zmiennych niewidocznych publicznie, poprzez określenie go poprzez podanie nazwy TS oraz nazwy TC.
@@ -1022,7 +1022,7 @@ Makro FRIEND{\_}TEST pozwala określić, który z testów ma mieć dostęp do zm
 \lstset{language=C++, caption=Testowanie prywatnego kodu przy pomocy funkcji biblioteki Google test, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_private_code/test/main.cpp}
 
-\section{Używanie asercji poza kodem przypadku testowego}
+\subsection{Używanie asercji poza kodem przypadku testowego}
 
 W przypadku Boost unittest nie ma możliwości wywoływania asercji w innym miejscu niż w kodzie TC. W bibliotece Google test jest to możliwe jeżeli zastosujemy makro <LEVEL>{\_}NO{\_}FATAL{\_}FAILURE.
 
@@ -1031,7 +1031,7 @@ W przypadku Boost unittest nie ma możliwości wywoływania asercji w innym miej
 \lstset{language=C++, caption=Użycie asercji poza ciałem funkcji, captionpos=b, tabsize=3, frame=lines, keywordstyle=\color{blue}, commentstyle=\color{OliveGreen}, stringstyle=\color{red}, numbers=left, numberstyle=\small,numbersep=5pt, breaklines=true, showstringspaces=false, basicstyle=\footnotesize, emph={label}}
 			\lstinputlisting{../gtest_subroutine_asserts/test/main.cpp}
 
-\section{Asercje zależne od typów}
+\subsection{Asercje zależne od typów}
 
 Google test dostarcza funkcje szablonową służącą do weryfikacji tożsamości typów - ::testing::StaticAssertTypeEq. Funkcja jako parametry szablonu przyjmuje dwa typy danych oraz po jej wywołaniu określa czy są one takie same.
 Weryfikacja typów jest szczególnie potrzebna w sytuacjach kiedy użycie szablonów powodując, że to kompilator często decyduje, którą instancje sparametryzowanej funkcji wywołać, a co za tym idzie zdarzają się sytuację kiedy wywoływana jest inna metoda niż ta przewidziana przez programistę.

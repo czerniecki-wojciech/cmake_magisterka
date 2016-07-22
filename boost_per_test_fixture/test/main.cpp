@@ -24,5 +24,5 @@ BOOST_FIXTURE_TEST_CASE(test_case1, MyFixture)
 	//porowanie zmiennej dostepnej w fixturze
 	BOOST_CHECK(myFixtureValue == 3);
 }
-//koniec definicji grupy testów
+//koniec definicji grupy testow
 BOOST_AUTO_TEST_SUITE_END()

@@ -29,7 +29,7 @@ TEST_F(CalcFixture, intTest)
 	double c = 3.0;
 	auto d = sc.add(a, b);
 
-	//sprawdzenie czy a i b s¹ tego samego typu
+	//sprawdzenie czy a i b sa tego samego typu
 	areTheSameType(a, b);
 	//sprawdzenie czy d jest typu int
 	testType<int>(d);

@@ -22,7 +22,7 @@ void printVectorToPredicateResult(const std::vector<T>& v, ::testing::AssertionR
 template <typename T>
 ::testing::AssertionResult compareVectors(const std::vector<T>& v1, const std::vector<T>& v2)
 {
-	if (v1.size() != v2.size()) { //sprawdzenie dlugosci wektorów
+	if (v1.size() != v2.size()) { //sprawdzenie dlugosci wektorow
 		::testing::AssertionResult res = ::testing::AssertionFailure(); //definicja obiektu przechowujacego komunikat o powodzie uznania testu za zakonczony niepowodzeniem
 		res << "Vectors have different size: " << v1.size() << " != " << v2.size();
 

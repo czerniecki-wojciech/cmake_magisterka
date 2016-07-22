@@ -25,5 +25,5 @@ BOOST_AUTO_TEST_CASE(test_case1)
 {
 	//cialo testu
 }
-//koniec definicji grupy testów
+//koniec definicji grupy testow
 BOOST_AUTO_TEST_SUITE_END()

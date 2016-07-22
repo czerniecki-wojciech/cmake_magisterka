@@ -1,13 +1,13 @@
 #include "gtest/gtest.h"
-//klasa pomocnicza dla testów szablonowych
+//klasa pomocnicza dla testow szablonowych
 template <typename T>
 class MyTypeTestFixture : public ::testing::Test
 {
 public:
 };
-//definicja typów szablonów
+//definicja typow szablonow
 using MyTestTypes = ::testing::Types<char, int, unsigned int>;
-//zdefiniowanie typów dla testow
+//zdefiniowanie typow dla testow
 TYPED_TEST_CASE(MyTypeTestFixture, MyTestTypes);
 //definicja testu szablonowego
 TYPED_TEST(MyTypeTestFixture, TestOfTypeSize)

@@ -12,5 +12,5 @@ BOOST_AUTO_TEST_CASE(test_case1)
 	//wypisanie dodatkowej wiadomosci podczas przetwarzania testu
 	BOOST_TEST_MESSAGE("\n***   I'm inside test_case1   ***\n");
 }
-//koniec definicji grupy testów
+//koniec definicji grupy testow
 BOOST_AUTO_TEST_SUITE_END()

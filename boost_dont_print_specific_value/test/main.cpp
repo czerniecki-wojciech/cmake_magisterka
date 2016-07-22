@@ -23,5 +23,5 @@ BOOST_AUTO_TEST_CASE(test_case1)
 	BOOST_CHECK_EQUAL(iv1, iv2);
 }
 
-//koniec definicji grupy testów
+//koniec definicji grupy testow
 BOOST_AUTO_TEST_SUITE_END()

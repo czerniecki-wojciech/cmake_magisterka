@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-TEST(TestSuite, TestCase) { /*TestCase - nazwa testu, TestSuite - nazwa grupy testów*/
+TEST(TestSuite, TestCase) { /*TestCase - nazwa testu, TestSuite - nazwa grupy testow*/
 	//cialo tstu
 }
 

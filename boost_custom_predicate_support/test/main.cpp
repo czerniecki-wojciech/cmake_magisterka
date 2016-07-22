@@ -28,7 +28,7 @@ void printVectorToPredicateResult(std::vector<T>& v, boost::test_tools::predicat
 template <typename T>
 boost::test_tools::predicate_result compareVectors(std::vector<T>& v1, std::vector<T>& v2)
 {
-	if (v1.size() != v2.size()) { //sprawdzenie dlugosci wektorów
+	if (v1.size() != v2.size()) { //sprawdzenie dlugosci wektorow
 		boost::test_tools::predicate_result res(false); //definicja obiektu przechowujacego komunikat o powodzie uznania testu za zakonczony niepowodzeniem
 
 		res.message() << "Vectors have different size: " << v1.size() << " != " << v2.size();
@@ -65,5 +65,5 @@ BOOST_AUTO_TEST_CASE(OutputStreamTest)
 	BOOST_CHECK(compareVectors(v1, v3));
 }
 
-//koniec definicji grupy testów
+//koniec definicji grupy testow
 BOOST_AUTO_TEST_SUITE_END()

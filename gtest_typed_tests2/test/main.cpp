@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-//klasa pomocnicza dla testów szablonowych
+//klasa pomocnicza dla testow szablonowych
 template <typename T>
 class MyTypeTestFixture : public ::testing::Test
 {
@@ -15,9 +15,9 @@ TYPED_TEST_P(MyTypeTestFixture, TestOfTypeSize)
 }
 //rejestracja testu
 REGISTER_TYPED_TEST_CASE_P(MyTypeTestFixture, TestOfTypeSize);
-//definicja typów szablonów
+//definicja typow szablonow
 using MyTestTypes = ::testing::Types<char, int, unsigned int>;
-//zdefiniowanie typów dla testow
+//zdefiniowanie typow dla testow
 INSTANTIATE_TYPED_TEST_CASE_P(MyTests, MyTypeTestFixture, MyTestTypes);
 
 int main(int argc, char* argv[])

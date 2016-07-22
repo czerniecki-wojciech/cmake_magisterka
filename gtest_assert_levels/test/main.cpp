@@ -48,10 +48,10 @@ TEST(TestCase1, Fatal) {
 	ASSERT_ANY_THROW(divideThreeBy(0));
 	//sprawdzenie czy kod nie rzuca wyjatku
 	ASSERT_NO_THROW(divideThreeBy(3));
-	//porównywanie liczb zmiennoprzecinkowych
+	//porownywanie liczb zmiennoprzecinkowych
 	ASSERT_FLOAT_EQ(100.0f, 100.00001f);
 	ASSERT_DOUBLE_EQ(100.0, 100.00000000000001);
-	//porównywanie liczb zmiennoprzecinkowych z uwzglednieniem bledu
+	//porownywanie liczb zmiennoprzecinkowych z uwzglednieniem bledu
 	ASSERT_NEAR(1.0, 9.0, 10.0);
 	//wymuszenie bledu
 	//FAIL();
